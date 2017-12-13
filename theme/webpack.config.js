@@ -3,21 +3,15 @@ const { resolve } = require('path');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
 const configureBabel = require('./babel.config.js');
 
+const themePath = '../../../../../pub/static/frontend/Magento/rush';
+const publicPath = 'http://localhost:8080/';
+
 const dirRoot = resolve(__dirname);
 const dirSource = resolve(dirRoot, 'src');
-const dirOutput = resolve(
-    dirRoot,
-    '../../../../../pub/static/frontend/Magento/rush/en_US/bundles'
-);
+const dirOutput = resolve(dirRoot, themePath, 'en_US/bundles');
+const dirModules = resolve(dirRoot, 'node_modules');
 
-const libs = [
-    'react',
-    'react-dom',
-    'react-redux',
-    'react-router-dom',
-    'redux',
-    'redux-actions'
-];
+const libs = ['react', 'react-dom', 'react-redux', 'react-router-dom', 'redux'];
 
 module.exports = env => {
     const environment = [].concat(env);
@@ -34,14 +28,14 @@ module.exports = env => {
         },
         output: {
             path: dirOutput,
-            publicPath: '/',
+            publicPath,
             filename: '[name].js',
-            chunkFilename: '[chunkhash].js'
+            chunkFilename: '[name].js'
         },
         module: {
             rules: [
                 {
-                    include: dirSource,
+                    include: [dirSource, resolve(dirModules, 'peregrine')],
                     test: /\.js$/,
                     use: [
                         {
@@ -65,7 +59,7 @@ module.exports = env => {
             ]
         },
         resolve: {
-            modules: [dirRoot, 'node_modules'],
+            modules: [dirRoot, dirModules],
             mainFiles: ['index'],
             extensions: ['.js']
         },
