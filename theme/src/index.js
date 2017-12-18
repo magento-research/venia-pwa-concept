@@ -1,7 +1,3 @@
-import { createElement } from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
 import Peregrine from 'peregrine';
 
 import './index.css';
