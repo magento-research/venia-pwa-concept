@@ -35,7 +35,7 @@ module.exports = env => {
         module: {
             rules: [
                 {
-                    include: [dirSource, resolve(dirModules, 'peregrine')],
+                    include: [dirSource],
                     test: /\.js$/,
                     use: [
                         {
