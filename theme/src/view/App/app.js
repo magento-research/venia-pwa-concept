@@ -1,16 +1,20 @@
 import { Component, createElement } from 'react';
 import { connect } from 'react-redux';
 
+import app from 'src';
 import Page from 'src/view/Page';
 import { selectNavigation } from 'src/store/reducers/navigation';
 import { extract } from 'src/utils';
-import app from '../..';
 
 export class App extends Component {
     componentDidMount(props) {
-        const reducer = extract(import('src/store/reducers/navigation'));
-
-        app.addReducer('navigation', reducer);
+        extract(import('src/store/reducers/navigation'))
+            .then(reducer => {
+                app.addReducer('navigation', reducer);
+            })
+            .catch(error => {
+                throw error;
+            });
     }
 
     render() {

@@ -1,11 +1,15 @@
 import Peregrine from 'peregrine';
 
+import { extract } from 'src/utils';
+
 import './index.css';
 
-const App = import('src/view/App').then(({ default: App }) => App);
-const app = new Peregrine(App);
+const app = new Peregrine();
 const container = document.getElementById('root');
 
-app.mount(container);
+extract(import('src/view/App')).then(App => {
+    app.component = App;
+    app.mount(container);
+});
 
 export default app;

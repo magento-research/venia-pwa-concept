@@ -1,1 +1,2 @@
-export const extract = async (obj, name = 'default') => (await obj)[name];
+export const extract = (obj, name = 'default') =>
+    Promise.resolve(obj).then(mod => mod[name]);
