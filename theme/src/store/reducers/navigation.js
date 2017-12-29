@@ -4,6 +4,7 @@ const initialState = {
 
 const handlers = {
     TOGGLE_NAVIGATION(state, { payload }) {
+        // if payload is undefined or null, toggle the current state
         const nextOpen = payload != null ? !!payload : !state.open;
 
         return {
