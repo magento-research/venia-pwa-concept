@@ -2,6 +2,7 @@ import { Component, createElement } from 'react';
 import { connect } from 'react-redux';
 
 import app from 'src';
+import Category from 'src/view/Category';
 import Home from 'src/view/Home';
 import Page from 'src/view/Page';
 import { selectNavigation } from 'src/store/reducers/navigation';
@@ -23,7 +24,7 @@ export class App extends Component {
 
         return (
             <Page nav={nav}>
-                <Home />
+                <Category />
             </Page>
         );
     }
