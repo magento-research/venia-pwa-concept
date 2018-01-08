@@ -1,4 +1,4 @@
-import Peregrine from 'peregrine';
+import Peregrine from '@magento/peregrine';
 
 import { extract } from 'src/utils';
 
