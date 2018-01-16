@@ -1,6 +1,7 @@
 export const extract = (obj, name = 'default') =>
     Promise.resolve(obj)
         .then(mod => mod[name])
-        .catch(() => {
-            throw new Error(`Object is not a valid module.`);
+        .catch(error => {
+            console.error(error);
+            // throw new Error(`Object is not a valid module.`);
         });
