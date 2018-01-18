@@ -1,25 +1,26 @@
-const dotenv = require('dotenv');
 const webpack = require('webpack');
 const { resolve } = require('path');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
+const loadEnv = require('./lib/load-env');
 const configureBabel = require('./babel.config.js');
-
-// assign .env contents to process.env
-dotenv.config();
-
-// resolve directories
-const dirRoot = resolve(__dirname);
-const dirSource = resolve(dirRoot, 'src');
-const dirOutput = resolve(dirRoot, process.env.THEME_PATH, 'en_US/bundles');
-const dirModules = resolve(dirRoot, 'node_modules');
 
 // mark dependencies for vendor bundle
 const libs = ['react', 'react-dom', 'react-redux', 'react-router-dom', 'redux'];
 
-module.exports = env => {
-    const environment = [].concat(env);
+module.exports = overrides => {
+    if (Array.isArray(overrides)) {
+      throw Error(`Environment conflict: cannot use webpack --env option to provide multiple environments. Supplied environment was ${overrides}`);
+    }
+
+    const env = loadEnv(overrides);
+    const environment = env.get('environment');
     const babelOptions = configureBabel(environment);
-    const isProd = environment.includes('production');
+    const isProd = environment === "production";
+    // resolve directories
+    const dirRoot = resolve(__dirname);
+    const dirSource = resolve(dirRoot, 'src');
+    const dirOutput = resolve(dirRoot, env.get('THEME_PATH'), 'en_US/bundles');
+    const dirModules = resolve(dirRoot, 'node_modules');
 
     console.log(`Environment: ${environment}`);
 
@@ -31,7 +32,7 @@ module.exports = env => {
         },
         output: {
             path: dirOutput,
-            publicPath: process.env.PUBLIC_PATH,
+            publicPath: env.get('PUBLIC_PATH'),
             filename: '[name].js',
             chunkFilename: '[name].js'
         },
@@ -69,7 +70,7 @@ module.exports = env => {
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
             new webpack.EnvironmentPlugin({
-                NODE_ENV: isProd ? 'production' : 'development'
+                NODE_ENV: environment
             })
         ],
         devServer: {
