@@ -78,7 +78,6 @@ module.exports = env => {
             new webpack.EnvironmentPlugin({
                 NODE_ENV: isProd ? 'production' : 'development',
                 THEME_PATH: null
-
             })
         ],
         devServer: {
@@ -110,26 +109,28 @@ module.exports = env => {
     }
 
     // add the Workbox plugin to generate a service worker
-    config.plugins.push(new WorkboxPlugin({
-        // `globDirectory` and `globPatterns` must match at least 1 file
-        // otherwise workbox throws an error
-        globDirectory: 'web',
-        globPatterns: ['**/*.{gif,jpg,png,svg}'],
+    config.plugins.push(
+        new WorkboxPlugin({
+            // `globDirectory` and `globPatterns` must match at least 1 file
+            // otherwise workbox throws an error
+            globDirectory: 'web',
+            globPatterns: ['**/*.{gif,jpg,png,svg}'],
 
-        // specify external resources to be cached
-        runtimeCaching: [
-            {
-                urlPattern: new RegExp(mockImagesPath.href),
-                handler: 'cacheFirst'
-            }
-        ],
+            // specify external resources to be cached
+            runtimeCaching: [
+                {
+                    urlPattern: new RegExp(mockImagesPath.href),
+                    handler: 'cacheFirst'
+                }
+            ],
 
-        // activate the worker as soon as it reaches the waiting phase
-        skipWaiting: true,
+            // activate the worker as soon as it reaches the waiting phase
+            skipWaiting: true,
 
-        // the max scope of a worker is its location
-        swDest: 'web/sw.js'
-    }));
+            // the max scope of a worker is its location
+            swDest: 'web/sw.js'
+        })
+    );
 
     return config;
 };
