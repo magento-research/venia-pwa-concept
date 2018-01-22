@@ -9,23 +9,28 @@
 }
 
 .gallery-item-image,
-.gallery-item-name,
-.gallery-item-price {
-  margin: 0.5rem 0;
-}
-
-.gallery-item-image img {
+.gallery-item-imagePlaceholder {
   display: block;
   height: auto;
   width: 100%;
+}
+
+.gallery-item-imagePlaceholder {
+  background-color: #eee;
+}
+
+.gallery-item-name,
+.gallery-item-price {
+  margin: 0.5rem 0;
 }
 
 .gallery-item[data-loaded="true"] {
   animation: 512ms ease-out fadeIn;
 }
 
-.gallery-item[data-loaded="false"] .gallery-item-image {
-  background-color: #eee;
+.gallery-item[data-loaded="false"] .gallery-item-image,
+.gallery-item[data-loaded="true"] .gallery-item-imagePlaceholder {
+  display: none;
 }
 
 .gallery-item[data-loaded="false"] .gallery-item-name {
