@@ -18,8 +18,7 @@
     "prettier:check": "prettier-check './**/*.js'",
     "start": "webpack-dev-server --progress --color --env development",
     "test": "run-p jest prettier:check lint",
-    "test:dev": "jest --watch",
-    "workbox": "workbox generate:sw"
+    "test:dev": "jest --watch"
   },
   "dependencies": {
     "@magento/peregrine": "^0.1.1-alpha",
@@ -56,7 +55,6 @@
     "uglifyjs-webpack-plugin": "^1.0.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.3",
-    "workbox-cli": "^2.1.2",
     "workbox-webpack-plugin": "^2.1.2"
   }
 }
