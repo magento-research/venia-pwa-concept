@@ -1,11 +1,14 @@
 const dotenv = require('dotenv');
 const webpack = require('webpack');
 const { URL } = require('url');
-const { readFile } = require('fs');
 const { resolve } = require('path');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
 const configureBabel = require('./babel.config.js');
+let trustCert;
+if (process.platform === 'darwin') {
+  trustCert = require('./lib/osx-trust-certificate');
+}
 
 // assign .env contents to process.env
 dotenv.config();
@@ -84,7 +87,8 @@ module.exports = env => {
             contentBase: false,
             https: true,
             port: 8080,
-            publicPath: '/'
+            publicPath: '/',
+            before: trustCert
         },
         devtool: 'source-map'
     };
