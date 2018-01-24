@@ -2,5 +2,6 @@ node_modules
 npm-debug.log
 web/*.js
 web/*.js.map
+coverage
 .DS_Store
 .env
