@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 const webpack = require('webpack');
-const url = require('url');
+const { URL } = require('url');
 const { readFile } = require('fs');
 const { resolve } = require('path');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
@@ -9,7 +9,7 @@ const WriteFileWebpackPlugin = require('write-file-webpack-plugin');
 const configureBabel = require('./babel.config.js');
 const getMagentoEnv = require('./lib/get-magento-env');
 const express = require('express');
-let trustCert;
+let trustCert = () => {};
 if (process.platform === 'darwin') {
     trustCert = require('./lib/webpack-dev-server-tls-trust/osx')(
         console,
@@ -27,7 +27,7 @@ const dirOutput = resolve(dirRoot, 'web/js');
 const dirModules = resolve(dirRoot, 'node_modules');
 
 // ensure env paths are valid URLs
-const mockImagesPath = new url.URL(process.env.MOCK_IMAGES_PATH);
+const mockImagesPath = new URL(process.env.MOCK_IMAGES_PATH);
 
 // mark dependencies for vendor bundle
 const libs = ['react', 'react-dom', 'react-redux', 'react-router-dom', 'redux'];
@@ -103,7 +103,8 @@ module.exports = async env => {
         plugins: [
             new webpack.NoEmitOnErrorsPlugin(),
             new webpack.EnvironmentPlugin({
-                NODE_ENV: isProd ? 'production' : 'development'
+                NODE_ENV: isProd ? 'production' : 'development',
+                SERVICE_WORKER_FILE_NAME: magentoEnv.serviceWorkerFileName
             })
         ],
         devServer: {

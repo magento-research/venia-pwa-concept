@@ -75,7 +75,7 @@ test('tries to put back an existing one if it fails', () => {
             getPemInstance().exists = false;
         })
         .mockImplementationOnce(() => {
-            throw Error('wtf');
+            throw Error('fail to write');
         });
     trust();
     expect(WebpackPEM.prototype.write).toHaveBeenCalledWith(
