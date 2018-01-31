@@ -1,4 +1,5 @@
 const dotenv = require('dotenv');
+const proxy = require('http-proxy-middleware');
 const webpack = require('webpack');
 const { URL } = require('url');
 const { readFile } = require('fs');
@@ -108,12 +109,18 @@ module.exports = async env => {
             })
         ],
         devServer: {
-            // contentBase: resolve(dirOutput, '../'),
+            contentBase: false,
             https: true,
             host: magentoEnv.devServerHostname,
             port: magentoEnv.devServerPort,
             publicPath: devPublicPath,
             before(app) {
+                app.use(proxy(["**", `!${magentoEnv.publicAssetPath}**/*`], {
+                    secure: false,
+                    target: magentoEnv.storeOrigin,
+                    changeOrigin: true,
+                    logLevel: 'debug'
+                }));
                 staticFileDirs.forEach(dir => {
                     app.use(
                         resolve(magentoEnv.publicAssetPath, dir),
