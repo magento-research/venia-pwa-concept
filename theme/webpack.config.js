@@ -115,12 +115,14 @@ module.exports = async env => {
             port: magentoEnv.devServerPort,
             publicPath: devPublicPath,
             before(app) {
-                app.use(proxy(["**", `!${magentoEnv.publicAssetPath}**/*`], {
-                    secure: false,
-                    target: magentoEnv.storeOrigin,
-                    changeOrigin: true,
-                    logLevel: 'debug'
-                }));
+                app.use(
+                    proxy(['**', `!${magentoEnv.publicAssetPath}**/*`], {
+                        secure: false,
+                        target: magentoEnv.storeOrigin,
+                        changeOrigin: true,
+                        logLevel: 'debug'
+                    })
+                );
                 staticFileDirs.forEach(dir => {
                     app.use(
                         resolve(magentoEnv.publicAssetPath, dir),

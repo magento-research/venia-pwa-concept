@@ -49,14 +49,14 @@ const mockAddCert = () =>
         }`
     );
 beforeEach(() => jest.clearAllMocks());
-it('has ADD_PROMPT and REMOVE_PROMPT static string properties', () => {
+it('has ADD_PROMPT static string property', () => {
     expect(typeof SecurityCLI.ADD_PROMPT).toBe('string');
-    expect(typeof SecurityCLI.REMOVE_PROMPT).toBe('string');
 });
 it('does not construct if no system keychains are found', () => {
     expect(() => new SecurityCLI()).toThrow('No system keychains found');
 });
 it('constructor the system keychain path', () => {
+    expect.assertions(2);
     mockCommand('security list-keychains -d system', fixtures.systemKeychains);
     expect(new SecurityCLI()._keychain).toBe('fakeKeychainPath');
 });
@@ -66,6 +66,7 @@ const prepareTrustedCert = () => {
     certFile = new TempFile(fixtures.trustedCertTxt);
 };
 it(".addTrustedCert() expects a TempFile and whines if it doesn't get one", () => {
+    expect.assertions(3);
     prepareTrustedCert();
     expect(() => cli.addTrustedCert()).toThrow(
         'requires a cert file object with a path property'
@@ -75,6 +76,7 @@ it(".addTrustedCert() expects a TempFile and whines if it doesn't get one", () =
     );
 });
 it('.addTrustedCert() adds one if none exist', () => {
+    expect.assertions(5);
     prepareTrustedCert();
     mockCommand(expect.anything());
     mockAddCert();
@@ -85,6 +87,7 @@ it('.addTrustedCert() adds one if none exist', () => {
     });
 });
 it('.addTrustedCert() throws if the add appeared not to work', () => {
+    expect.assertions(5);
     prepareTrustedCert();
     mockFindCerts();
     mockAddCert();
@@ -94,6 +97,7 @@ it('.addTrustedCert() throws if the add appeared not to work', () => {
     );
 });
 it('.addTrustedCert() detects the new SHA among the others', () => {
+    expect.assertions(5);
     prepareTrustedCert();
     mockFindCerts();
     mockAddCert();
@@ -104,11 +108,7 @@ it('.addTrustedCert() detects the new SHA among the others', () => {
     });
 });
 const mockRemoveTrustedCert = (file = certFile) =>
-    mockCommand(
-        `sudo -p "\n\n${
-            SecurityCLI.REMOVE_PROMPT
-        } " security remove-trusted-cert -d ${file.path}`
-    );
+    mockCommand(`sudo -n security remove-trusted-cert -d ${file.path}`);
 let sha;
 const prepareRemoveCert = () => {
     mockListKeychains();
@@ -121,6 +121,7 @@ const prepareRemoveCert = () => {
     sha = secondSHA;
 };
 it("expects a TempFile and whines if it doesn't get one", () => {
+    expect.assertions(6);
     prepareRemoveCert();
     expect(() => cli.removeTrustedCert()).toThrow(
         'requires a cert file object with a path property'
@@ -132,8 +133,11 @@ it("expects a TempFile and whines if it doesn't get one", () => {
 it('runs the privileged remove-trusted-cert command and the delete-certificate command', () => {
     prepareRemoveCert();
     mockRemoveTrustedCert();
-    mockCommand(`sudo security delete-certificate -Z ${sha} fakeKeychainPath`);
+    mockCommand(
+        `sudo -n security delete-certificate -Z ${sha} fakeKeychainPath`
+    );
     cli.removeTrustedCert(certFile);
+    expect.assertions(6);
 });
 it('whines if asked to remove an unknown cert', () => {
     prepareRemoveCert();
@@ -142,4 +146,5 @@ it('whines if asked to remove an unknown cert', () => {
     expect(() => cli.removeTrustedCert(certFile)).toThrow(
         'Could not find this cert'
     );
+    expect.assertions(6);
 });

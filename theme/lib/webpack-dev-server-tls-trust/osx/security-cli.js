@@ -4,9 +4,6 @@ class SecurityCLI {
     static get ADD_PROMPT() {
         return 'Enter your password to enable web browsers to trust the development server SSL certificate:';
     }
-    static get REMOVE_PROMPT() {
-        return 'Enter your password to revoke trust for the development server SSL certificate (Recommended for security):';
-    }
     constructor() {
         const runner = new Runner('security');
         this.run = runner.run.bind(runner);
@@ -51,20 +48,22 @@ class SecurityCLI {
         debug(`Trusted certificate added: ${shaAdded}`);
         this._trustedCertsAdded[certFile.read()] = shaAdded;
     }
-    removeTrustedCert(certFile, prompt = SecurityCLI.REMOVE_PROMPT) {
+    removeTrustedCert(certFile) {
         if (!certFile || !certFile.path) {
             throw Error(
                 'removeTrustedCert(certFile) requires a cert file object with a path property'
             );
         }
-        this.sudo(`\n\n${prompt} `, `remove-trusted-cert -d ${certFile.path}`);
+        // TODO: refactor to remove old certs on launch instead of at exit
+        // Temp fix to run sudo non-interactively.
+        this.run(`remove-trusted-cert -d ${certFile.path}`, 'sudo -n');
         const sha = this._trustedCertsAdded[certFile.read()];
         if (!sha) {
             throw Error(
                 'Could not find this cert in trusted certs cache, cannot delete'
             );
         }
-        this.sudo(`delete-certificate -Z ${sha} ${this._keychain}`);
+        this.run(`delete-certificate -Z ${sha} ${this._keychain}`, 'sudo -n');
     }
 }
 module.exports = SecurityCLI;
