@@ -32,7 +32,7 @@ module.exports = env => {
 
     // create the default config for development-like environments
     const config = {
-        context: dirSource,
+        context: dirRoot,
         entry: {
             client: resolve(dirSource, 'index.js')
         },
