@@ -1,15 +1,21 @@
 const { URL } = require('url');
-const fetch = require('make-fetch-happen').defaults({
+const makeFetchHappen = require('make-fetch-happen');
+
+// `strictSSL` corresponds to `rejectUnauthorized`
+// our self-signed certs are "unauthorized", and we want to accept them
+const fetch = makeFetchHappen.defaults({
     cache: 'no-store',
     strictSSL: false
 });
-module.exports = magentoHost => {
-    if (!magentoHost) {
-        return Promise.reject(
-            Error('get-magento-env: No Magento domain specified.')
-        );
+
+module.exports = async magentoHost => {
+    let uri;
+
+    try {
+        uri = new URL('webpack-config.json', magentoHost);
+    } catch (e) {
+        throw Error('get-magento-env: Invalid Magento domain specified.');
     }
-    return fetch(new URL('webpack-config.json', magentoHost).href).then(res =>
-        res.json()
-    );
+
+    return fetch(uri.href).then(res => res.json());
 };
