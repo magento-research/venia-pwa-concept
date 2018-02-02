@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Store\Api\Data\StoreInterface" type="Magento\Store\Model\Store"/>
     <type name="Magento\Framework\App\RouterListInterface">
         <arguments>
             <argument name="routerList" xsi:type="array">
@@ -8,6 +9,13 @@
                     <item name="disable" xsi:type="boolean">false</item>
                     <item name="sortOrder" xsi:type="string">100</item>
                 </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="pwaPrepareCommand" xsi:type="object">Magento\Pwa\Console\Command\PwaPrepareCommand</item>
             </argument>
         </arguments>
     </type>

@@ -164,13 +164,15 @@ class WebpackConfig implements \JsonSerializable
      */
     public function getPublicAssetPath()
     {
+//        return $this->_assetRepo->getUrl('/') .
+//        $this->_getTheme()->getThemePath() .
+//        $this->_getTheme()->getFullPath();
+//        if (empty($this->_publicAssetPath)) {
+//            $this->_publicAssetPath = '/pub/static/' . $this->_getTheme()->getFullPath();
+//        }
+//        return $this->_publicAssetPath;
         if (empty($this->_publicAssetPath)) {
-            $this->_publicAssetPath = "/" . trim(str_replace(
-                    $this->getStoreOrigin(),
-                    "",
-                    $this->_baseUrl->getBaseUrl(['_type' => UrlInterface::URL_TYPE_STATIC, '_secure' => true]) .
-                    $this->_assetRepo->createAsset("/")->getPath()
-                ), "/") . "/";
+            $this->_publicAssetPath = "/pub/static/" . trim($this->_getTheme()->getFullPath(), "/") . "/en_US/";
 
         }
         return $this->_publicAssetPath;

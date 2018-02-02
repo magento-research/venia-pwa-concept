@@ -1,11 +1,9 @@
 jest.mock('child_process');
-jest.mock('make-fetch-happen');
 jest.mock('fs');
 jest.mock('apacheconf');
 jest.mock('../../webpack-dev-server-tls-trust/webpack-pem');
 const { unlink, writeFile } = require('fs');
 const apacheconf = require('apacheconf');
-const fetch = require('make-fetch-happen');
 const { generate } = require('../../webpack-dev-server-tls-trust/webpack-pem');
 const { exec } = require('child_process');
 const getMagentoEnv = require('../').fromVagrant;
@@ -17,11 +15,6 @@ const {
 const machine = parsedMachines[0];
 const { nodeCb } = require('../../__tests__/__helpers__/mock-fn-utils');
 apacheconf.mockImplementation(nodeCb(null, {}));
-fetch.mockImplementation(() => Promise.resolve(({
-    json: () => Promise.resolve({
-        storeOrigin: 'https://example.com'
-    })
-})));
 exec.mockImplementation(nodeCb(null, JSON.stringify({ env: {}, config: {} })));
 unlink.mockImplementation(nodeCb());
 writeFile.mockImplementation(nodeCb());
@@ -84,6 +77,7 @@ test('calls vagrant CLI to get necessary bits', async () => {
         "vagrant ssh -c 'sudo cp /vagrant/etc/vagrant-apache-ssl.key /etc/ssl/private/vagrant-apache-ssl.key && sudo cp /vagrant/etc/vagrant-apache-ssl.cert /etc/ssl/certs/vagrant-apache-ssl.crt && sudo cp /etc/apache2/sites-available/magento2.conf /etc/apache2/sites-available/magento2.conf.bak && sudo cp /vagrant/etc/magento2.conf /etc/apache2/sites-available/magento2.conf && sudo a2enmod ssl && sudo service apache2 restart' -- -T",
         `vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento app:config:dump > /dev/null && php -r '"'"'echo json_encode([ "env" => include("app/etc/env.php"), "config" => include("app/etc/config.php") ]);'"'"'' -- -T`,
         `vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento config:set --lock web/unsecure/base_url https://example.com && bin/magento config:set --lock web/secure/base_url https://example.com && bin/magento config:set --lock dev/static/sign 0 && bin/magento config:set --lock web/secure/use_in_frontend 1 && bin/magento config:set --lock web/secure/base_web_url {{secure_base_url}} && bin/magento setup:upgrade' -- -T`,
+        "vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento dev:pwa:prepare' -- -T"
     ];
     await getMagentoEnv({ origin: 'https://example.com', name: machine.name });
     expectedCommands.forEach((cmd, i) => {
@@ -110,6 +104,7 @@ test('does not make unnecessary calls', async () => {
         "vagrant ssh -c 'cat /etc/apache2/sites-available/magento2.conf' -- -T",
         `vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento app:config:dump > /dev/null && php -r '"'"'echo json_encode([ "env" => include("app/etc/env.php"), "config" => include("app/etc/config.php") ]);'"'"'' -- -T`,
         `vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento config:set --lock web/unsecure/base_url https://example.com && bin/magento config:set --lock web/secure/base_url https://example.com && bin/magento config:set --lock web/secure/use_in_frontend 1 && bin/magento config:set --lock web/secure/base_web_url {{secure_base_url}}' -- -T`,
+        "vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento dev:pwa:prepare' -- -T"
     ];
     await getMagentoEnv({ origin: 'https://example.com', name: machine.name });
     expectedCommands.forEach((cmd, i) => {
@@ -149,6 +144,7 @@ test('makes no config calls if no config needs changing', async () => {
         "vagrant ssh -c 'echo $MAGENTO_ROOT' -- -T",
         "vagrant ssh -c 'cat /etc/apache2/sites-available/magento2.conf' -- -T",
         `vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento app:config:dump > /dev/null && php -r '"'"'echo json_encode([ "env" => include("app/etc/env.php"), "config" => include("app/etc/config.php") ]);'"'"'' -- -T`,
+        "vagrant ssh -c 'cd $MAGENTO_ROOT && bin/magento dev:pwa:prepare' -- -T"
     ];
     await getMagentoEnv({ origin: 'https://example.com', name: machine.name });
     expectedCommands.forEach((cmd, i) => {

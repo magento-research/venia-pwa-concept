@@ -204,7 +204,9 @@ class VagrantVMProvisioner {
         this.queueConfigUpdates();
         this.queueOtherUpdates();
         await this.runUpdates();
-        return fromEndpoint(this.origin);
+        return this.session(
+            'cd $MAGENTO_ROOT && bin/magento dev:pwa:prepare'
+        ).then(json => JSON.parse(json));
     }
 }
 module.exports = conf => {
