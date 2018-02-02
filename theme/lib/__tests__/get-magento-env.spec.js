@@ -23,10 +23,7 @@ test('sets defaults on fetch', () => {
     );
 });
 test('returns a rejected Promise with an error if called with no arg', () =>
-    expect(getMagentoEnv()).rejects.toHaveProperty(
-        'message',
-        expect.stringContaining('No Magento domain specified')
-    ));
+    expect(getMagentoEnv()).rejects.toHaveProperty('message'));
 test('calls fetch with the Magento wpconfig endpoint of the domain', () =>
     getMagentoEnv('https://example.com').then(env => {
         expect(fetch).toHaveBeenCalledWith(
