@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, createElement } from 'react';
 
 import './gallery.css';
