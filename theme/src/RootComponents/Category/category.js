@@ -1,6 +1,6 @@
 import { Component, createElement } from 'react';
 
-import Gallery from '../Gallery';
+import Gallery from 'src/view/Gallery';
 import mockData from './mockData';
 
 import './category.css';
