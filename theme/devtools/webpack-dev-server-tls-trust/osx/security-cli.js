@@ -5,10 +5,8 @@ class SecurityCLI {
         return 'Enter your password to enable web browsers to trust the development server SSL certificate:';
     }
     constructor() {
-        const runner = new Runner('security');
-        this.run = runner.run.bind(runner);
-        this.sudo = runner.sudo.bind(runner);
-        const keychains = this.run('list-keychains -d system');
+        this.runner = new Runner('security');
+        const keychains = this.runner.runSync('list-keychains -d system');
         if (!keychains) {
             throw Error('No system keychains found!');
         }
@@ -17,7 +15,9 @@ class SecurityCLI {
         this._trustedCertsAdded = {};
     }
     _getCertificateSHAs() {
-        const certListTxt = this.run(`find-certificate -apZ ${this._keychain}`);
+        const certListTxt = this.runner.runSync(
+            `find-certificate -apZ ${this._keychain}`
+        );
         if (!certListTxt) {
             return [];
         }
@@ -34,10 +34,12 @@ class SecurityCLI {
         }
         const shasBefore = this._getCertificateSHAs();
         debug(`before adding trusted cert, found ${shasBefore.length} shas`);
-        this.sudo(
-            `\n\n${prompt} `,
+        this.runner.sudoSync(
             `add-trusted-cert -d -k ${this._keychain} -r trustRoot ` +
-                `-e certExpired -p ssl -p basic ${certFile.path}`
+                `-e certExpired -p ssl -p basic ${certFile.path}`,
+            {
+                prompt: `\n\n${prompt} `
+            }
         );
         const shaAdded = this._getCertificateSHAs().find(
             sha => !shasBefore.some(s => s === sha)
@@ -56,14 +58,16 @@ class SecurityCLI {
         }
         // TODO: refactor to remove old certs on launch instead of at exit
         // Temp fix to run sudo non-interactively.
-        this.run(`remove-trusted-cert -d ${certFile.path}`, 'sudo -n');
+        this.runner.trySudoSync(`remove-trusted-cert -d ${certFile.path}`);
         const sha = this._trustedCertsAdded[certFile.read()];
         if (!sha) {
             throw Error(
                 'Could not find this cert in trusted certs cache, cannot delete'
             );
         }
-        this.run(`delete-certificate -Z ${sha} ${this._keychain}`, 'sudo -n');
+        this.runner.trySudoSync(
+            `delete-certificate -Z ${sha} ${this._keychain}`
+        );
     }
 }
 module.exports = SecurityCLI;
