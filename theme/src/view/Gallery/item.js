@@ -13,6 +13,7 @@ const itemPlaceholder = (
                 width="300"
                 height="372"
                 src={imagePlaceholder}
+                alt=""
             />
         </div>
         <div className="gallery-item-name" />
@@ -39,12 +40,14 @@ class GalleryItem extends Component {
                         width="300"
                         height="372"
                         src={imagePlaceholder}
+                        alt=""
                     />
                     <img
                         className="gallery-item-image"
                         width="300"
                         height="372"
                         src={image}
+                        alt={name}
                         onLoad={this.handleLoad}
                         onError={this.handleError}
                     />
