@@ -33,6 +33,9 @@ const dirModules = resolve(dirRoot, 'node_modules');
 // ensure env paths are valid URLs
 const mockImagesPath = new URL(process.env.MOCK_IMAGES_PATH);
 
+// ensure magento host is value URL
+const magentoHost = new URL(process.env.MAGENTO_HOST);
+
 // mark dependencies for vendor bundle
 const libs = ['react', 'react-dom', 'react-redux', 'react-router-dom', 'redux'];
 
@@ -48,7 +51,10 @@ module.exports = async env => {
     let magentoEnv;
 
     try {
-        magentoEnv = await getMagentoEnv(process.env.MAGENTO_HOST);
+        magentoEnv = await getMagentoEnv.fromVagrant({
+            origin: magentoHost.href,
+            name: magentoHost.hostname
+        });
     } catch (e) {
         console.error(
             `Unable to get Magento environment from "MAGENTO_HOST" configuration. Found: ${
@@ -134,9 +140,6 @@ module.exports = async env => {
                     );
                 });
                 trustCert();
-            },
-            headers: {
-                'Access-Control-Allow-Origin': '*'
             }
         },
         devtool: 'source-map'
