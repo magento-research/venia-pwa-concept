@@ -5,7 +5,7 @@ import mockData from './mockData';
 
 import './category.css';
 
-const emptyData = Array.from({ length: 12 }, () => null);
+const emptyData = [];
 
 class Category extends Component {
     state = {

@@ -59,9 +59,10 @@ const data = [
         name: 'Angelina Tank Dress',
         price: '$98'
     }
-].map(model => ({
+].map((model, index) => ({
     ...model,
-    image: `https://magento-ux.github.io/pwaza/${model.image}`
+    image: `https://magento-ux.github.io/pwaza/${model.image}`,
+    key: `product${index.toString().padStart(3, '0')}`
 }));
 
 export default data;

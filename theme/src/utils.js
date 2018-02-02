@@ -1,12 +1,8 @@
-export function createBeacon() {
-    let resolve, reject;
-    const promise = new Promise((_resolve, _reject) => {
-        resolve = _resolve;
-        reject = _reject;
-    });
-
-    return Object.assign(promise, { resolve, reject });
-}
+export const coroutine = fn => (...args) => {
+    const obj = fn(...args);
+    obj.next();
+    return obj;
+};
 
 export const extract = (obj, name = 'default') =>
     Promise.resolve(obj)
