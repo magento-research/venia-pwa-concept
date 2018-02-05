@@ -1,10 +1,15 @@
 import { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
 import GalleryItems, { emptyData } from './items';
 
 import './gallery.css';
 
 class Gallery extends Component {
+    static propTypes = {
+        data: PropTypes.arrayOf(PropTypes.object)
+    };
+
     render() {
         const { data } = this.props;
         const hasData = Array.isArray(data) && data.length;

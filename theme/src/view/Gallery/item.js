@@ -1,4 +1,5 @@
 import { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
 // generate a 300x372 transparent png
 const imagePlaceholder =
@@ -22,6 +23,16 @@ const itemPlaceholder = (
 );
 
 class GalleryItem extends Component {
+    static propTypes = {
+        item: PropTypes.shape({
+            image: PropTypes.string,
+            name: PropTypes.string,
+            price: PropTypes.string
+        }),
+        placeholder: PropTypes.bool,
+        showImage: PropTypes.bool
+    };
+
     render() {
         const { item, placeholder, showImage } = this.props;
 

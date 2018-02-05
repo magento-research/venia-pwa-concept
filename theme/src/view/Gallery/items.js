@@ -1,4 +1,5 @@
 import { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
 import GalleryItem from './item';
 import { fixedObserver, initObserver } from 'src/utils';
@@ -20,6 +21,10 @@ const initState = () => ({
 });
 
 class GalleryItems extends Component {
+    static propTypes = {
+        items: PropTypes.arrayOf(PropTypes.object)
+    };
+
     state = initState();
 
     componentWillReceiveProps(nextProps) {
