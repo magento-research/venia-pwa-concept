@@ -1,28 +1,26 @@
 import { Component, createElement } from 'react';
 
 import GalleryItem from './item';
-import { coroutine } from 'src/utils';
+import { fixedObserver, initObserver } from 'src/utils';
 
 const pageSize = 12;
 const emptyData = Array.from({ length: pageSize }).fill(null);
+const createCollection = initObserver(fixedObserver);
 
+// inline the placeholder elements, since they're constant
 const placeholders = emptyData.map((_, index) => (
     <GalleryItem key={index} placeholder={true} />
 ));
 
-const createCollection = coroutine(function*() {
-    for (let i = 0; i < pageSize; i++) {
-        yield;
-    }
-
-    return;
+// initialize the state with a one-page observer, `collection`
+// when the observer completes, set `done` to `true`
+const initState = () => ({
+    collection: createCollection(pageSize),
+    done: false
 });
 
 class GalleryItems extends Component {
-    state = {
-        collection: null,
-        done: false
-    };
+    state = initState();
 
     componentWillReceiveProps(nextProps) {
         const { items } = this.props;
@@ -32,10 +30,7 @@ class GalleryItems extends Component {
             return;
         }
 
-        this.setState(() => ({
-            collection: createCollection(),
-            done: false
-        }));
+        this.setState(initState);
     }
 
     render() {
