@@ -15,6 +15,7 @@ export const extract = (obj, name = 'default') =>
  * Create an observer-type generator that yields a fixed number of values.
  *
  * @param {number} length
+ * @returns {Iterator}
  */
 export const fixedObserver = function*(length) {
     for (let i = 0; i < length; i++) {
@@ -29,6 +30,7 @@ export const fixedObserver = function*(length) {
  * returns. This initialization step is necessary for observer-type generators.
  *
  * @param {GeneratorFunction} fn
+ * @returns {function}
  */
 export const initObserver = fn => (...args) => {
     const obj = fn(...args);
