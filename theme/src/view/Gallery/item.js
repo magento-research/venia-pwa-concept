@@ -2,21 +2,24 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 // generate a 300x372 transparent png
-const imagePlaceholder =
+const imagePlaceholderUri =
     'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAfCAQAAAC4ua71AAAAGklEQVR42mNkIBkwjmoZ1TKqZVTLqJYRpgUAaP0AIAQAObYAAAAASUVORK5CYII=';
 
-// inline the placeholder element, since it's constant
+// inline the placeholder elements, since they're constant
+const imagePlaceholder = (
+    <img
+        className="gallery-item-image"
+        width="300"
+        height="372"
+        src={imagePlaceholderUri}
+        alt=""
+        data-placeholder={true}
+    />
+);
+
 const itemPlaceholder = (
-    <div className="gallery-item" data-loaded={false}>
-        <div className="gallery-item-images">
-            <img
-                className="gallery-item-imagePlaceholder"
-                width="300"
-                height="372"
-                src={imagePlaceholder}
-                alt=""
-            />
-        </div>
+    <div className="gallery-item" data-placeholder={true}>
+        <div className="gallery-item-images">{imagePlaceholder}</div>
         <div className="gallery-item-name" />
         <div className="gallery-item-price" />
     </div>
@@ -40,19 +43,12 @@ class GalleryItem extends Component {
             return itemPlaceholder;
         }
 
-        const loaded = !!(item && showImage);
         const { image, name, price } = item;
 
         return (
-            <div className="gallery-item" data-loaded={loaded}>
+            <div className="gallery-item">
                 <div className="gallery-item-images">
-                    <img
-                        className="gallery-item-imagePlaceholder"
-                        width="300"
-                        height="372"
-                        src={imagePlaceholder}
-                        alt=""
-                    />
+                    {!showImage && imagePlaceholder}
                     <img
                         className="gallery-item-image"
                         width="300"
@@ -61,6 +57,7 @@ class GalleryItem extends Component {
                         alt={name}
                         onLoad={this.handleLoad}
                         onError={this.handleError}
+                        data-show={showImage}
                     />
                 </div>
                 <div className="gallery-item-name">
