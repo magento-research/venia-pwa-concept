@@ -1,7 +1,7 @@
 /**
  * Extract a single export from a module.
  *
- * @param {object} obj - A module's `exports` object
+ * @param {object} obj - A module's namespace object
  * @param {string} name - The key to look up
  */
 export const extract = (obj, name = 'default') =>
