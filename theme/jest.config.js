@@ -1,6 +1,11 @@
 module.exports = {
     verbose: true,
     collectCoverage: true,
+    testPathIgnorePatterns: [
+        '/node_modules',
+        '/__fixtures__/',
+        '/__helpers__/'
+    ],
     projects: [
         {
             displayName: 'theme',

@@ -9,11 +9,11 @@ class OpenSSLCLI {
     }
     constructor() {
         const runner = new Runner('openssl');
-        this.run = runner.run.bind(runner);
+        this.runSync = runner.runSync.bind(runner);
     }
     createP12(keyFile, pemFile, passout) {
         const p12file = new TempFile(null, '.p12');
-        this.run(
+        this.runSync(
             `pkcs12 -export -inkey ${keyFile.path} -in ${pemFile.path} ` +
                 `-certfile ${pemFile.path} -out ${
                     p12file.path
@@ -23,7 +23,7 @@ class OpenSSLCLI {
     }
     createImportablePEM(p12file, passin, passout) {
         const pem = new TempFile(null, '.pem');
-        this.run(
+        this.runSync(
             `pkcs12 -in ${p12file.path} -out ${
                 pem.path
             } -passin ${passin} -passout ${passout}`

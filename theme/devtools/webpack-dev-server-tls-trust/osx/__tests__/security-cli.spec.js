@@ -55,7 +55,7 @@ it('has ADD_PROMPT static string property', () => {
 it('does not construct if no system keychains are found', () => {
     expect(() => new SecurityCLI()).toThrow('No system keychains found');
 });
-it('constructor the system keychain path', () => {
+it('constructor gets the system keychain path', () => {
     expect.assertions(2);
     mockCommand('security list-keychains -d system', fixtures.systemKeychains);
     expect(new SecurityCLI()._keychain).toBe('fakeKeychainPath');
