@@ -7,6 +7,7 @@ import Item from '../item';
 configure({ adapter: new Adapter() });
 
 const validItem = {
+    key: 'foo',
     image: 'foo.jpg',
     name: 'Foo',
     price: '$1.00'
@@ -53,6 +54,34 @@ test('renders both placeholder and real images in `STATE 1`', () => {
     expect(images).toHaveLength(2);
     expect(images.first().prop('data-placeholder')).toBe(true);
     expect(images.last().prop('data-placeholder')).toBe(void 0);
+});
+
+test('calls `onLoad` properly on image `load`', () => {
+    const handleLoad = jest.fn();
+    const wrapper = shallow(
+        <Item item={validItem} showImage={false} onLoad={handleLoad} />
+    );
+
+    wrapper
+        .find('.gallery-item-image')
+        .last()
+        .simulate('load');
+
+    expect(handleLoad).toBeCalledWith(validItem.key);
+});
+
+test('calls `onError` properly on image `error`', () => {
+    const handleError = jest.fn();
+    const wrapper = shallow(
+        <Item item={validItem} showImage={false} onError={handleError} />
+    );
+
+    wrapper
+        .find('.gallery-item-image')
+        .last()
+        .simulate('error');
+
+    expect(handleError).toBeCalledWith(validItem.key);
 });
 
 /**
