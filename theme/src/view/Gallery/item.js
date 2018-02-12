@@ -32,8 +32,15 @@ class GalleryItem extends Component {
             name: PropTypes.string,
             price: PropTypes.string
         }),
+        onError: PropTypes.func,
+        onLoad: PropTypes.func,
         placeholder: PropTypes.bool,
         showImage: PropTypes.bool
+    };
+
+    static defaultProps = {
+        onError: () => void 0,
+        onLoad: () => void 0
     };
 
     render() {

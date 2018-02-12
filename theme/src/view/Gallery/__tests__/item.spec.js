@@ -56,6 +56,14 @@ test('renders both placeholder and real images in `STATE 1`', () => {
     expect(images.last().prop('data-placeholder')).toBe(void 0);
 });
 
+test('renders without `onLoad` and `onError`', () => {
+    const wrapper = shallow(<Item item={validItem} showImage={false} />);
+    const image = wrapper.find('.gallery-item-image').last();
+
+    expect(() => image.simulate('load')).not.toThrow();
+    expect(() => image.simulate('error')).not.toThrow();
+});
+
 test('calls `onLoad` properly on image `load`', () => {
     const handleLoad = jest.fn();
     const wrapper = shallow(
