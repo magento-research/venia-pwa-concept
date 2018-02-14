@@ -22,7 +22,7 @@ const initState = () => ({
 
 class GalleryItems extends Component {
     static propTypes = {
-        items: PropTypes.arrayOf(PropTypes.object)
+        items: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
     state = initState();
