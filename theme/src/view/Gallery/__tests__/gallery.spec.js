@@ -8,15 +8,14 @@ configure({ adapter: new Adapter() });
 
 const items = [{ key: 'a' }, { key: 'b' }];
 
-test('renders if `data` is falsy', () => {
-    expect(() => shallow(<Gallery />)).not.toThrow();
-    expect(() => shallow(<Gallery data={null} />)).not.toThrow();
-});
-
 test('renders if `data` is an empty array', () => {
-    expect(() => shallow(<Gallery data={[]} />)).not.toThrow();
+    const wrapper = shallow(<Gallery data={[]} />);
+
+    expect(wrapper.hasClass('gallery')).toBe(true);
 });
 
 test('renders if `data` is an array of objects', () => {
-    expect(() => shallow(<Gallery data={items} />)).not.toThrow();
+    const wrapper = shallow(<Gallery data={items} />);
+
+    expect(wrapper.hasClass('gallery')).toBe(true);
 });
