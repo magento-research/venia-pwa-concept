@@ -19,14 +19,14 @@ const validItem = {
  * `showImage` is irrelevant
  */
 test('renders a placeholder item', () => {
-    const wrapper = shallow(<Item placeholder={true} />);
+    const wrapper = shallow(<Item />);
 
     expect(wrapper.hasClass('gallery-item')).toBe(true);
     expect(wrapper.prop('data-placeholder')).toBe(true);
 });
 
 test('renders only a placeholder image in `STATE 0`', () => {
-    const wrapper = shallow(<Item placeholder={true} />);
+    const wrapper = shallow(<Item />);
     const images = wrapper.find('.gallery-item-image');
 
     expect(images).toHaveLength(1);
