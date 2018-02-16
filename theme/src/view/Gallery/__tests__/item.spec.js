@@ -18,14 +18,14 @@ const validItem = {
  * `item` is `null` or `undefined`
  * `showImage` is irrelevant
  */
-test('renders a placeholder item', () => {
+test('renders a placeholder item while awaiting item', () => {
     const wrapper = shallow(<Item />);
 
     expect(wrapper.hasClass('gallery-item')).toBe(true);
     expect(wrapper.prop('data-placeholder')).toBe(true);
 });
 
-test('renders only a placeholder image in `STATE 0`', () => {
+test('renders only a placeholder image while awaiting item', () => {
     const wrapper = shallow(<Item />);
     const images = wrapper.find('.gallery-item-image');
 
@@ -38,7 +38,7 @@ test('renders only a placeholder image in `STATE 0`', () => {
  * `item` is a valid data object
  * `showImage` is `false`
  */
-test('renders both placeholder and real images in `STATE 1`', () => {
+test('renders placeholder and real image when `showImage: false`', () => {
     const wrapper = shallow(<Item item={validItem} showImage={false} />);
     const images = wrapper.find('.gallery-item-image');
 
@@ -47,7 +47,7 @@ test('renders both placeholder and real images in `STATE 1`', () => {
     expect(images.last().prop('data-placeholder')).toBeUndefined();
 });
 
-test('renders without `onLoad` and `onError`', () => {
+test('renders real image even without `onLoad` and `onError`', () => {
     const wrapper = shallow(<Item item={validItem} showImage={false} />);
     const image = wrapper.find('.gallery-item-image').last();
 
@@ -88,7 +88,7 @@ test('calls `onError` properly on image `error`', () => {
  * `item` is a valid data object
  * `showImage` is `true`
  */
-test('renders only the real image in `STATE 2`', () => {
+test('renders only the real image when `showImage: true`', () => {
     const wrapper = shallow(<Item item={validItem} showImage={true} />);
     const images = wrapper.find('.gallery-item-image');
 
