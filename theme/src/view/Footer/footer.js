@@ -1,12 +1,26 @@
 import { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
-import './footer.css';
+import defaultClasses from './footer.css';
 
 class Footer extends Component {
+    static propTypes = {
+        classes: PropTypes.shape({
+            root: PropTypes.string,
+            tile: PropTypes.string
+        })
+    };
+
+    static defaultProps = {
+        classes: defaultClasses
+    };
+
     render() {
+        const { classes } = this.props;
+
         return (
-            <footer className="Footer">
-                <div className="Footer-tile--account">
+            <footer className={classes.root}>
+                <div className={classes.tile}>
                     <h2>
                         <span>Your Account</span>
                     </h2>
@@ -17,7 +31,7 @@ class Footer extends Component {
                         </span>
                     </p>
                 </div>
-                <div className="Footer-tile--instagram">
+                <div className={classes.tile}>
                     <h2>
                         <span>Follow Us On Instagram</span>
                     </h2>
@@ -28,7 +42,7 @@ class Footer extends Component {
                         </span>
                     </p>
                 </div>
-                <div className="Footer-tile--locator">
+                <div className={classes.tile}>
                     <h2>
                         <span>Store Locator</span>
                     </h2>
@@ -39,7 +53,7 @@ class Footer extends Component {
                         </span>
                     </p>
                 </div>
-                <div className="Footer-tile--support">
+                <div className={classes.tile}>
                     <h2>
                         <span>Customer Support</span>
                     </h2>

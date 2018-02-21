@@ -90,7 +90,9 @@ module.exports = async env => {
                         {
                             loader: 'css-loader',
                             options: {
-                                importLoaders: 1
+                                importLoaders: 1,
+                                localIdentName: 'm-[hash:base64:5]',
+                                modules: true
                             }
                         }
                     ]

@@ -1,16 +1,29 @@
 import { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
-import './tile.css';
+import defaultClasses from './tile.css';
 
 class Tile extends Component {
+    static propTypes = {
+        classes: PropTypes.shape({
+            image: PropTypes.string,
+            label: PropTypes.string,
+            root: PropTypes.string
+        })
+    };
+
+    static defaultProps = {
+        classes: defaultClasses
+    };
+
     render() {
-        const { text, href } = this.props;
+        const { classes, text } = this.props;
 
         return (
-            <a className="Navigation-tile" href={href}>
-                <span className="Navigation-tile-image" />
-                <span className="Navigation-tile-label">{text}</span>
-            </a>
+            <span className={classes.root}>
+                <span className={classes.image} />
+                <span className={classes.label}>{text}</span>
+            </span>
         );
     }
 }

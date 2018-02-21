@@ -1,19 +1,32 @@
 import { Component, createElement } from 'react';
+import PropTypes from 'prop-types';
 
 import Footer from 'src/view/Footer';
 import Header from 'src/view/Header';
 import Main from 'src/view/Main';
 import Navigation from 'src/view/Navigation';
 
-import './page.css';
+import defaultClasses from './page.css';
 
 class Page extends Component {
+    static propTypes = {
+        classes: PropTypes.shape({
+            masked: PropTypes.string,
+            root: PropTypes.string
+        })
+    };
+
+    static defaultProps = {
+        classes: defaultClasses
+    };
+
     render() {
-        const { children, nav } = this.props;
+        const { children, classes, nav } = this.props;
+        const className = nav ? classes.masked : classes.root;
 
         return (
-            <div className="Page" data-nav={nav}>
-                <Header nav={nav} />
+            <div className={className}>
+                <Header />
                 <Main>{children}</Main>
                 <Footer />
                 <Navigation nav={nav} />

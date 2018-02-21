@@ -1,38 +1,61 @@
 /* eslint-disable */
 import { Component, createElement } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { Trigger } from 'src/view/Navigation';
 
-import './header.css';
+import defaultClasses from './header.css';
 
 class Header extends Component {
+    static propTypes = {
+        classes: PropTypes.shape({
+            cartTrigger: PropTypes.string,
+            navTrigger: PropTypes.string,
+            primaryActions: PropTypes.string,
+            root: PropTypes.string,
+            searchBlock: PropTypes.string,
+            searchInput: PropTypes.string,
+            searchTrigger: PropTypes.string,
+            secondaryActions: PropTypes.string,
+            title: PropTypes.string,
+            toolbar: PropTypes.string
+        })
+    };
+
+    static defaultProps = {
+        classes: defaultClasses
+    };
+
     render() {
-        const { nav } = this.props;
+        const { classes } = this.props;
 
         return (
-            <header className="Header" data-nav={nav}>
-                <div className="Header-toolbar">
-                    <h2 className="Header-title">
-                        <span>Rush</span>
+            <header className={classes.root}>
+                <div className={classes.toolbar}>
+                    <h2 className={classes.title}>
+                        <span>Venia</span>
                     </h2>
-                    <div className="Header-primaryActions">
-                        <Trigger className="Header-navTrigger" nav={nav}>
+                    <div className={classes.primaryActions}>
+                        <Trigger className={classes.navTrigger}>
                             <span>🍔</span>
                         </Trigger>
                     </div>
-                    <div className="Header-secondaryActions">
-                        <div className="Header-cartTrigger">
-                            <Link to="/cart">🛒</Link>
-                        </div>
+                    <div className={classes.secondaryActions}>
+                        <button className={classes.searchTrigger}>
+                            <span>🔍</span>
+                        </button>
+                        <Link to="/cart" className={classes.cartTrigger}>
+                            <span>🛒</span>
+                        </Link>
                     </div>
-                    <div className="Header-searchBlock">
-                        <input
-                            className="Header-searchBlock-input"
-                            type="text"
-                            placeholder="I'm looking for..."
-                        />
-                    </div>
+                </div>
+                <div className={classes.searchBlock}>
+                    <input
+                        className={classes.searchInput}
+                        type="text"
+                        placeholder="I'm looking for..."
+                    />
                 </div>
             </header>
         );

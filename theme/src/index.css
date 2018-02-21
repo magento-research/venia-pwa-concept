@@ -11,6 +11,7 @@ html {
   line-height: 1.25;
   -webkit-font-smoothing: antialiased;
   --rush-gray: rgb(246, 246, 246);
+  --venia-teal: rgb(0, 134, 138);
 }
 
 body {
@@ -36,4 +37,17 @@ button {
   border: 0;
   font-size: 100%;
   -webkit-appearance: none;
+}
+
+.button {
+  align-items: center;
+  border: 1px solid currentColor;
+  border-radius: 100px;
+  color: var(--venia-teal);
+  display: inline-flex;
+  font-size: 0.875rem;
+  height: 3rem;
+  justify-content: center;
+  min-width: 8.75rem;
+  padding: 0;
 }

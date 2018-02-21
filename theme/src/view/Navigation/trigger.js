@@ -1,17 +1,12 @@
 import { Component, createElement } from 'react';
 import { connect } from 'react-redux';
 
-const defaultClassName = 'NavigationTrigger';
-
 class Trigger extends Component {
     render() {
         const { children, className } = this.props;
 
         return (
-            <button
-                className={className || defaultClassName}
-                onClick={this.handleClick}
-            >
+            <button className={className} onClick={this.handleClick}>
                 {children}
             </button>
         );
