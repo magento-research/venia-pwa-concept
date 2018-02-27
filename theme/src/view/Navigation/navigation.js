@@ -1,6 +1,7 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import Icon from 'src/view/Icon';
 import Tile from './tile';
 import Trigger from './trigger';
 
@@ -44,32 +45,24 @@ class Navigation extends Component {
                         <span>Main Menu</span>
                     </h2>
                     <Trigger className={classes.navTrigger}>
-                        <span role="img" aria-label="Hide navigation">
-                            ❌
-                        </span>
+                        <Icon name="x" />
                     </Trigger>
                 </div>
                 <nav className={classes.tiles}>{tiles}</nav>
                 <ul className={classes.items}>
                     <li className={classes.item}>
                         <span className={classes.link}>
-                            <span role="img" aria-label="Account">
-                                👩
-                            </span>
+                            <Icon name="user" />
                         </span>
                     </li>
                     <li className={classes.item}>
                         <span className={classes.link}>
-                            <span role="img" aria-label="Favorites">
-                                💖
-                            </span>
+                            <Icon name="heart" />
                         </span>
                     </li>
                     <li className={classes.item}>
                         <span className={classes.link}>
-                            <span role="img" aria-label="Stores">
-                                📞
-                            </span>
+                            <Icon name="map-pin" />
                         </span>
                     </li>
                 </ul>

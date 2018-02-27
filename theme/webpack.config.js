@@ -91,9 +91,19 @@ module.exports = async env => {
                             loader: 'css-loader',
                             options: {
                                 importLoaders: 1,
-                                localIdentName: 'm-[hash:base64:5]',
+                                localIdentName:
+                                    '[name]-[local]-[hash:base64:3]',
                                 modules: true
                             }
+                        }
+                    ]
+                },
+                {
+                    test: /\.svg$/,
+                    use: [
+                        {
+                            loader: 'file-loader',
+                            options: {}
                         }
                     ]
                 }

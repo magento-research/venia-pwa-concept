@@ -1,5 +1,5 @@
 .root {
-  background-color: var(--rush-gray);
+  background-color: rgb(var(--venia-grey));
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
   display: grid;
   grid-auto-columns: 100%;
@@ -10,6 +10,7 @@
 }
 
 .toolbar {
+  align-content: center;
   align-items: center;
   display: grid;
   grid-template-areas:
@@ -17,25 +18,24 @@
   grid-template-columns: 1fr auto 1fr;
   grid-template-rows: 3rem;
   justify-items: center;
+  min-height: 3.5rem;
   padding: 0 1rem;
 }
 
 .navTrigger,
 .cartTrigger,
 .searchTrigger {
-  align-items: center;
-  display: inline-flex;
-  justify-content: center;
+  composes: root from '../button.css';
   height: 3rem;
   width: 3rem;
 }
 
-.title {
-  font-family: Times, serif;
-  font-size: 1rem;
+.navTrigger {
+  order: -1;
+}
+
+.logo {
   grid-area: title;
-  margin: 0;
-  text-transform: uppercase;
 }
 
 .primaryActions {
@@ -46,11 +46,6 @@
 .secondaryActions {
   grid-area: secondary;
   justify-self: end;
-}
-
-.navTrigger {
-  cursor: pointer;
-  order: -1;
 }
 
 .searchBlock {
@@ -64,7 +59,7 @@
 }
 
 .searchInput {
-  border: 1px solid rgb(226, 226, 226);
+  border: 1px solid rgb(var(--venia-border));
   border-radius: 6px;
   font-size: 1rem;
   height: 3rem;

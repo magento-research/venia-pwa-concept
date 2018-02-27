@@ -1,11 +1,10 @@
 .root {
   display: grid;
-  grid-column-gap: 1rem;
   grid-template-areas:
-    "filters actions actions"
-    "filters items items"
-    "filters pagination pagination";
-  grid-template-columns: 11.25rem auto 1fr;
+    "actions"
+    "items"
+    "pagination";
+  grid-template-columns: 1fr;
   line-height: 1;
 }
 
@@ -15,8 +14,12 @@
   grid-auto-columns: auto;
   grid-auto-flow: column;
   grid-column-gap: 1rem;
-  height: 4rem;
-  justify-self: center;
+  justify-content: center;
+  padding-bottom: 1rem;
+}
+
+.action {
+  composes: button from "../button.css";
 }
 
 .items {
@@ -26,57 +29,18 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
+@media (max-width: 640px) {
+  .items {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .pagination {
-  grid-area: pagination;
-  justify-self: center;
-}
-
-.filters {
-  border: 1px solid #ccc;
-  grid-area: filters;
-}
-
-.gallery-item-image {
-  display: block;
-  grid-area: main;
-  height: auto;
-  transition-duration: 512ms;
-  transition-property: opacity, visibility;
-  transition-timing-function: ease-out;
-  width: 100%;
-}
-
-.gallery-item-image[data-placeholder="true"] {
-  background-color: #eee;
-}
-
-.gallery-item-image[data-show="false"] {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.gallery-item-image[data-show="true"] {
-  opacity: 1;
-  visibility: visible;
-}
-
-.gallery-item-name,
-.gallery-item-price {
-  margin: 0.5rem 0;
-}
-
-.gallery-item[data-placeholder="true"] .gallery-item-name {
-  background-color: #eee;
-  height: 1.25rem;
-}
-
-.gallery-item[data-placeholder="true"] .gallery-item-price {
-  background-color: #eee;
-  height: 1.25rem;
-  width: 3rem;
-}
-
-.gallery-item-images {
   display: grid;
-  grid-template-areas: "main";
+  grid-area: pagination;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  grid-column-gap: 1rem;
+  justify-content: center;
+  padding-top: 1rem;
 }

@@ -1,16 +1,18 @@
-/* eslint-disable */
 import { Component, createElement } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { Trigger } from 'src/view/Navigation';
+import Icon from 'src/view/Icon';
 
 import defaultClasses from './header.css';
+import logo from './logo.svg';
 
 class Header extends Component {
     static propTypes = {
         classes: PropTypes.shape({
             cartTrigger: PropTypes.string,
+            logo: PropTypes.string,
             navTrigger: PropTypes.string,
             primaryActions: PropTypes.string,
             root: PropTypes.string,
@@ -18,7 +20,6 @@ class Header extends Component {
             searchInput: PropTypes.string,
             searchTrigger: PropTypes.string,
             secondaryActions: PropTypes.string,
-            title: PropTypes.string,
             toolbar: PropTypes.string
         })
     };
@@ -33,20 +34,24 @@ class Header extends Component {
         return (
             <header className={classes.root}>
                 <div className={classes.toolbar}>
-                    <h2 className={classes.title}>
-                        <span>Venia</span>
-                    </h2>
+                    <img
+                        className={classes.logo}
+                        src={logo}
+                        height="40"
+                        alt="Venia"
+                        title="Venia"
+                    />
                     <div className={classes.primaryActions}>
                         <Trigger className={classes.navTrigger}>
-                            <span>🍔</span>
+                            <Icon name="menu" />
                         </Trigger>
                     </div>
                     <div className={classes.secondaryActions}>
                         <button className={classes.searchTrigger}>
-                            <span>🔍</span>
+                            <Icon name="search" />
                         </button>
                         <Link to="/cart" className={classes.cartTrigger}>
-                            <span>🛒</span>
+                            <Icon name="shopping-cart" />
                         </Link>
                     </div>
                 </div>

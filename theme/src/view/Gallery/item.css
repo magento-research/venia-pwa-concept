@@ -1,6 +1,4 @@
-.root {
-  display: block;
-}
+/* .root {} */
 
 .images {
   display: grid;
@@ -21,7 +19,7 @@
 
 .imagePlaceholder {
   composes: image;
-  background-color: var(--rush-gray);
+  background-color: rgb(var(--venia-grey));
 }
 
 .name,
@@ -34,13 +32,13 @@
 
 /* state: pending */
 
-.root_pending {
+/* .root_pending {
   composes: root;
 }
 
 .images_pending {
   composes: images;
-}
+} */
 
 .image_pending {
   composes: image;
@@ -48,17 +46,17 @@
   visibility: hidden;
 }
 
-.imagePlaceholder_pending {
+/* .imagePlaceholder_pending {
   composes: imagePlaceholder;
-}
+} */
 
 .name_pending {
   composes: name;
-  background-color: var(--rush-gray);
+  background-color: rgb(var(--venia-grey));
 }
 
 .price_pending {
   composes: price;
-  background-color: var(--rush-gray);
+  background-color: rgb(var(--venia-grey));
   width: 3rem;
 }

@@ -6,6 +6,19 @@ import Item from '../item';
 
 configure({ adapter: new Adapter() });
 
+const classes = {
+    image: 'a',
+    image_pending: 'b',
+    images: 'c',
+    images_pending: 'd',
+    name: 'e',
+    name_pending: 'f',
+    price: 'g',
+    price_pending: 'h',
+    root: 'i',
+    root_pending: 'j'
+};
+
 const validItem = {
     key: 'foo',
     image: 'foo.jpg',
@@ -19,18 +32,18 @@ const validItem = {
  * `showImage` is irrelevant
  */
 test('renders a placeholder item while awaiting item', () => {
-    const wrapper = shallow(<Item />);
+    const wrapper = shallow(<Item classes={classes} />).dive();
 
-    expect(wrapper.hasClass('gallery-item')).toBe(true);
-    expect(wrapper.prop('data-placeholder')).toBe(true);
+    expect(wrapper.hasClass(classes.root_pending)).toBe(true);
 });
 
 test('renders only a placeholder image while awaiting item', () => {
-    const wrapper = shallow(<Item />);
-    const images = wrapper.find('.gallery-item-image');
+    const wrapper = shallow(<Item classes={classes} />);
+    const placeholder = wrapper.first().dive();
+    const images = placeholder.find(classes.images_pending);
 
-    expect(images).toHaveLength(1);
-    expect(images.first().prop('data-placeholder')).toBe(true);
+    expect(images).toHaveLength(placeholder.html());
+    // expect(images.first().hasClass(classes.image_pending)).toBe(true);
 });
 
 /**
@@ -39,17 +52,21 @@ test('renders only a placeholder image while awaiting item', () => {
  * `showImage` is `false`
  */
 test('renders placeholder and real image when `showImage: false`', () => {
-    const wrapper = shallow(<Item item={validItem} showImage={false} />);
-    const images = wrapper.find('.gallery-item-image');
+    const wrapper = shallow(
+        <Item classes={classes} item={validItem} showImage={false} />
+    );
+    const image = wrapper.find(classes.image);
 
-    expect(images).toHaveLength(2);
-    expect(images.first().prop('data-placeholder')).toBe(true);
-    expect(images.last().prop('data-placeholder')).toBeUndefined();
+    expect(image).toHaveLength(2);
+    expect(image.first().hasClass(classes.image_pending)).toBe(true);
+    expect(image.last().hasClass(classes.image_pending)).toBe(false);
 });
 
 test('renders real image even without `onLoad` and `onError`', () => {
-    const wrapper = shallow(<Item item={validItem} showImage={false} />);
-    const image = wrapper.find('.gallery-item-image').last();
+    const wrapper = shallow(
+        <Item classes={classes} item={validItem} showImage={false} />
+    );
+    const image = wrapper.find(classes.image).last();
 
     expect(() => image.simulate('load')).not.toThrow();
     expect(() => image.simulate('error')).not.toThrow();
@@ -58,11 +75,16 @@ test('renders real image even without `onLoad` and `onError`', () => {
 test('calls `onLoad` properly on image `load`', () => {
     const handleLoad = jest.fn();
     const wrapper = shallow(
-        <Item item={validItem} showImage={false} onLoad={handleLoad} />
+        <Item
+            classes={classes}
+            item={validItem}
+            showImage={false}
+            onLoad={handleLoad}
+        />
     );
 
     wrapper
-        .find('.gallery-item-image')
+        .find(classes.image)
         .last()
         .simulate('load');
 
@@ -72,11 +94,16 @@ test('calls `onLoad` properly on image `load`', () => {
 test('calls `onError` properly on image `error`', () => {
     const handleError = jest.fn();
     const wrapper = shallow(
-        <Item item={validItem} showImage={false} onError={handleError} />
+        <Item
+            classes={classes}
+            item={validItem}
+            showImage={false}
+            onError={handleError}
+        />
     );
 
     wrapper
-        .find('.gallery-item-image')
+        .find(classes.image)
         .last()
         .simulate('error');
 
@@ -89,9 +116,11 @@ test('calls `onError` properly on image `error`', () => {
  * `showImage` is `true`
  */
 test('renders only the real image when `showImage: true`', () => {
-    const wrapper = shallow(<Item item={validItem} showImage={true} />);
-    const images = wrapper.find('.gallery-item-image');
+    const wrapper = shallow(
+        <Item classes={classes} item={validItem} showImage={true} />
+    );
+    const image = wrapper.find(classes.image);
 
-    expect(images).toHaveLength(1);
-    expect(images.first().prop('data-placeholder')).toBeUndefined();
+    expect(image).toHaveLength(1);
+    expect(image.first().hasClass(classes.image_pending)).toBe(false);
 });

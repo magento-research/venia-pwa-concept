@@ -8,11 +8,11 @@ import defaultClasses from './gallery.css';
 class Gallery extends Component {
     static propTypes = {
         classes: PropTypes.shape({
-            actions: PropTypes.string.isRequired,
-            filters: PropTypes.string.isRequired,
-            items: PropTypes.string.isRequired,
-            pagination: PropTypes.string.isRequired,
-            root: PropTypes.string.isRequired
+            actions: PropTypes.string,
+            filters: PropTypes.string,
+            items: PropTypes.string,
+            pagination: PropTypes.string,
+            root: PropTypes.string
         }),
         data: PropTypes.arrayOf(PropTypes.object)
     };
@@ -30,18 +30,21 @@ class Gallery extends Component {
         return (
             <div className={classes.root}>
                 <div className={classes.actions}>
-                    <button>Filter</button>
-                    <button>Sort</button>
+                    <button className={classes.action}>
+                        <span>Filter</span>
+                    </button>
+                    <button className={classes.action}>
+                        <span>Sort</span>
+                    </button>
                 </div>
                 <div className={classes.items}>
                     <GalleryItems items={items} />
                 </div>
                 <div className={classes.pagination}>
-                    <button>
+                    <button className={classes.action}>
                         <span>Show More</span>
                     </button>
                 </div>
-                <div className={classes.filters} />
             </div>
         );
     }

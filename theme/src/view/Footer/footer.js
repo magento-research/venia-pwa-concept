@@ -6,8 +6,11 @@ import defaultClasses from './footer.css';
 class Footer extends Component {
     static propTypes = {
         classes: PropTypes.shape({
+            copyright: PropTypes.string,
             root: PropTypes.string,
-            tile: PropTypes.string
+            tile: PropTypes.string,
+            tileBody: PropTypes.string,
+            tileTitle: PropTypes.string
         })
     };
 
@@ -21,10 +24,10 @@ class Footer extends Component {
         return (
             <footer className={classes.root}>
                 <div className={classes.tile}>
-                    <h2>
+                    <h2 className={classes.tileTitle}>
                         <span>Your Account</span>
                     </h2>
-                    <p>
+                    <p className={classes.tileBody}>
                         <span>
                             Sign up and get access to our wonderful rewards
                             program.
@@ -32,34 +35,36 @@ class Footer extends Component {
                     </p>
                 </div>
                 <div className={classes.tile}>
-                    <h2>
-                        <span>Follow Us On Instagram</span>
+                    <h2 className={classes.tileTitle}>
+                        <span>inquiries@example.com</span>
                     </h2>
-                    <p>
+                    <p className={classes.tileBody}>
                         <span>
-                            See what the Rush Tribe is up to, and add your
-                            stories to the mix.
+                            Need to email us? Use the address above and we'll
+                            respond as soon as possible.
                         </span>
                     </p>
                 </div>
                 <div className={classes.tile}>
-                    <h2>
-                        <span>Store Locator</span>
+                    <h2 className={classes.tileTitle}>
+                        <span>Live Chat</span>
                     </h2>
-                    <p>
-                        <span>
-                            Find the one closest to you from over 1200 locations
-                            worldwide.
-                        </span>
+                    <p className={classes.tileBody}>
+                        <span>Mon – Fri: 5 a.m. – 10 p.m. PST</span>
+                        <br />
+                        <span>Sat – Sun: 6 a.m. – 9 p.m. PST</span>
                     </p>
                 </div>
                 <div className={classes.tile}>
-                    <h2>
-                        <span>Customer Support</span>
+                    <h2 className={classes.tileTitle}>
+                        <span>Help Center</span>
                     </h2>
-                    <p>
-                        <span>Call us, chat, email us, FAQs and more.</span>
+                    <p className={classes.tileBody}>
+                        <span>Get answers from our community online.</span>
                     </p>
+                </div>
+                <div className={classes.copyright}>
+                    <span>© Magento 2018. All rights reserved.</span>
                 </div>
             </footer>
         );
