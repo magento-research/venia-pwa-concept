@@ -1,4 +1,4 @@
-/* .root {} */
+.root {}
 
 .images {
   display: grid;
@@ -32,13 +32,13 @@
 
 /* state: pending */
 
-/* .root_pending {
+.root_pending {
   composes: root;
 }
 
 .images_pending {
   composes: images;
-} */
+}
 
 .image_pending {
   composes: image;
@@ -46,9 +46,9 @@
   visibility: hidden;
 }
 
-/* .imagePlaceholder_pending {
+.imagePlaceholder_pending {
   composes: imagePlaceholder;
-} */
+}
 
 .name_pending {
   composes: name;
