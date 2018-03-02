@@ -12,7 +12,7 @@
   composes: root;
   background-color: white;
   border: 1px solid currentColor;
-  border-radius: 1.5rem;
+  border-radius: 0.5rem;
   color: rgb(var(--venia-teal));
   font-size: 0.875rem;
   height: 3rem;
