@@ -2,7 +2,8 @@ import { Component, createElement } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { Trigger } from 'src/view/Navigation';
+import classify from 'src/classify';
+import { Trigger as NavTrigger } from 'src/view/Navigation';
 import Icon from 'src/view/Icon';
 
 import defaultClasses from './header.css';
@@ -24,9 +25,13 @@ class Header extends Component {
         })
     };
 
-    static defaultProps = {
-        classes: defaultClasses
-    };
+    get triggerClasses() {
+        const { classes } = this.props;
+
+        return {
+            root: classes.navTrigger
+        };
+    }
 
     render() {
         const { classes } = this.props;
@@ -42,9 +47,9 @@ class Header extends Component {
                         title="Venia"
                     />
                     <div className={classes.primaryActions}>
-                        <Trigger className={classes.navTrigger}>
+                        <NavTrigger classes={this.triggerClasses}>
                             <Icon name="menu" />
-                        </Trigger>
+                        </NavTrigger>
                     </div>
                     <div className={classes.secondaryActions}>
                         <button className={classes.searchTrigger}>
@@ -67,4 +72,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default classify(defaultClasses)(Header);

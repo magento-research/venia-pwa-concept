@@ -1,6 +1,7 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
 import Gallery from 'src/view/Gallery';
 import mockData from './mockData';
 
@@ -15,10 +16,6 @@ class Category extends Component {
             root: PropTypes.string,
             title: PropTypes.string
         })
-    };
-
-    static defaultProps = {
-        classes: defaultClasses
     };
 
     state = {
@@ -52,4 +49,4 @@ class Category extends Component {
     }
 }
 
-export default Category;
+export default classify(defaultClasses)(Category);

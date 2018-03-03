@@ -1,6 +1,8 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
+
 import defaultClasses from './main.css';
 
 class Main extends Component {
@@ -10,10 +12,6 @@ class Main extends Component {
         })
     };
 
-    static defaultProps = {
-        classes: defaultClasses
-    };
-
     render() {
         const { children, classes } = this.props;
 
@@ -21,4 +19,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default classify(defaultClasses)(Main);

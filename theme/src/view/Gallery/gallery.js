@@ -1,6 +1,7 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
 import GalleryItems, { emptyData } from './items';
 
 import defaultClasses from './gallery.css';
@@ -18,7 +19,6 @@ class Gallery extends Component {
     };
 
     static defaultProps = {
-        classes: defaultClasses,
         data: emptyData
     };
 
@@ -50,4 +50,4 @@ class Gallery extends Component {
     }
 }
 
-export default Gallery;
+export default classify(defaultClasses)(Gallery);

@@ -30,10 +30,6 @@
   width: 3rem;
 }
 
-.navTrigger {
-  order: -1;
-}
-
 .logo {
   grid-area: title;
 }

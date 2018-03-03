@@ -1,6 +1,8 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
+
 import defaultClasses from './item.css';
 
 const imageWidth = '300';
@@ -46,7 +48,6 @@ class GalleryItem extends Component {
     };
 
     static defaultProps = {
-        classes: defaultClasses,
         onError: () => {},
         onLoad: () => {}
     };
@@ -138,4 +139,4 @@ class GalleryItem extends Component {
     };
 }
 
-export default GalleryItem;
+export default classify(defaultClasses)(GalleryItem);

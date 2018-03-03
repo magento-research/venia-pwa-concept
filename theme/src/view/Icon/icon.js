@@ -2,6 +2,8 @@ import { Component, createElement } from 'react';
 import Feather from 'feather-icons';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
+
 import defaultClasses from './icon.css';
 
 class Icon extends Component {
@@ -9,10 +11,6 @@ class Icon extends Component {
         classes: PropTypes.shape({
             root: PropTypes.string
         })
-    };
-
-    static defaultProps = {
-        classes: defaultClasses
     };
 
     render() {
@@ -24,4 +22,4 @@ class Icon extends Component {
     }
 }
 
-export default Icon;
+export default classify(defaultClasses)(Icon);

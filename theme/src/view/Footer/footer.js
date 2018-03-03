@@ -1,6 +1,8 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
+
 import defaultClasses from './footer.css';
 
 class Footer extends Component {
@@ -12,10 +14,6 @@ class Footer extends Component {
             tileBody: PropTypes.string,
             tileTitle: PropTypes.string
         })
-    };
-
-    static defaultProps = {
-        classes: defaultClasses
     };
 
     render() {
@@ -71,4 +69,4 @@ class Footer extends Component {
     }
 }
 
-export default Footer;
+export default classify(defaultClasses)(Footer);

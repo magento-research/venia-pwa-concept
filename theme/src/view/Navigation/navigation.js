@@ -1,6 +1,7 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
 import Icon from 'src/view/Icon';
 import Tile from './tile';
 import Trigger from './trigger';
@@ -28,10 +29,6 @@ class Navigation extends Component {
         classes: PropTypes.shape({
             root: PropTypes.string
         })
-    };
-
-    static defaultProps = {
-        classes: defaultClasses
     };
 
     render() {
@@ -71,4 +68,4 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+export default classify(defaultClasses)(Navigation);

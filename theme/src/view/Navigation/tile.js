@@ -1,6 +1,8 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
+import classify from 'src/classify';
+
 import defaultClasses from './tile.css';
 
 class Tile extends Component {
@@ -10,10 +12,6 @@ class Tile extends Component {
             label: PropTypes.string,
             root: PropTypes.string
         })
-    };
-
-    static defaultProps = {
-        classes: defaultClasses
     };
 
     render() {
@@ -28,4 +26,4 @@ class Tile extends Component {
     }
 }
 
-export default Tile;
+export default classify(defaultClasses)(Tile);

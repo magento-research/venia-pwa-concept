@@ -6,6 +6,8 @@ import Header from 'src/view/Header';
 import Main from 'src/view/Main';
 import Navigation from 'src/view/Navigation';
 
+import classify from 'src/classify';
+
 import defaultClasses from './page.css';
 
 class Page extends Component {
@@ -14,10 +16,6 @@ class Page extends Component {
             masked: PropTypes.string,
             root: PropTypes.string
         })
-    };
-
-    static defaultProps = {
-        classes: defaultClasses
     };
 
     render() {
@@ -35,4 +33,4 @@ class Page extends Component {
     }
 }
 
-export default Page;
+export default classify(defaultClasses)(Page);

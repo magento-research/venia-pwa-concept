@@ -1,5 +1,6 @@
 import { Component, createElement } from 'react';
 import { connect } from 'react-redux';
+import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
 import app from 'src';
@@ -7,6 +8,7 @@ import Category from 'src/RootComponents/Category';
 import Page from 'src/view/Page';
 import { selectNavigation } from 'src/store/reducers/navigation';
 import { extract } from 'src/utils';
+import classify from 'src/classify';
 
 import defaultClasses from './app.css';
 
@@ -15,10 +17,6 @@ export class App extends Component {
         classes: PropTypes.shape({
             promo: PropTypes.string
         })
-    };
-
-    static defaultProps = {
-        classes: defaultClasses
     };
 
     componentDidMount() {
@@ -51,4 +49,4 @@ const mapStateToProps = state => ({
     navigation: selectNavigation(state)
 });
 
-export default connect(mapStateToProps)(App);
+export default compose(classify(defaultClasses), connect(mapStateToProps))(App);
