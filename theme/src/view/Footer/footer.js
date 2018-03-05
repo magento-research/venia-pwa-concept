@@ -2,7 +2,6 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-
 import defaultClasses from './footer.css';
 
 class Footer extends Component {
@@ -38,8 +37,8 @@ class Footer extends Component {
                     </h2>
                     <p className={classes.tileBody}>
                         <span>
-                            Need to email us? Use the address above and we'll
-                            respond as soon as possible.
+                            Need to email us? Use the address above and
+                            we&rsquo;ll respond as soon as possible.
                         </span>
                     </p>
                 </div>

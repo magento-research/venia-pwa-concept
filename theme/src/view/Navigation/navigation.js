@@ -5,7 +5,6 @@ import classify from 'src/classify';
 import Icon from 'src/view/Icon';
 import Tile from './tile';
 import Trigger from './trigger';
-
 import defaultClasses from './navigation.css';
 
 const CATEGORIES = [

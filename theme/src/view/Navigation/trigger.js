@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 
 import classify from 'src/classify';
-
 import defaultClasses from './trigger.css';
 
 class Trigger extends Component {

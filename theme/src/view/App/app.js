@@ -4,12 +4,11 @@ import { compose } from 'redux';
 import PropTypes from 'prop-types';
 
 import app from 'src';
+import classify from 'src/classify';
 import Category from 'src/RootComponents/Category';
 import Page from 'src/view/Page';
 import { selectNavigation } from 'src/store/reducers/navigation';
 import { extract } from 'src/utils';
-import classify from 'src/classify';
-
 import defaultClasses from './app.css';
 
 export class App extends Component {

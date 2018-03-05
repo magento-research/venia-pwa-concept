@@ -7,7 +7,6 @@ import Main from 'src/view/Main';
 import Navigation from 'src/view/Navigation';
 
 import classify from 'src/classify';
-
 import defaultClasses from './page.css';
 
 class Page extends Component {

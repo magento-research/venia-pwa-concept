@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
 import GalleryItems, { emptyData } from './items';
-
 import defaultClasses from './gallery.css';
 
 class Gallery extends Component {

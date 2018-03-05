@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import classify from 'src/classify';
 import Gallery from 'src/view/Gallery';
 import mockData from './mockData';
-
 import defaultClasses from './category.css';
 
 const emptyData = [];

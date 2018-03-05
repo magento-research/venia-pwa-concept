@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import classify from 'src/classify';
 import { Trigger as NavTrigger } from 'src/view/Navigation';
 import Icon from 'src/view/Icon';
-
 import defaultClasses from './header.css';
 import logo from './logo.svg';
 

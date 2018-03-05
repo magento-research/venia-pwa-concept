@@ -3,7 +3,6 @@ import Feather from 'feather-icons';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-
 import defaultClasses from './icon.css';
 
 class Icon extends Component {
