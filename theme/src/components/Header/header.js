@@ -41,7 +41,7 @@ class Header extends Component {
                     <img
                         className={classes.logo}
                         src={logo}
-                        height="40"
+                        height="32"
                         alt="Venia"
                         title="Venia"
                     />
