@@ -52,7 +52,7 @@ class Product extends Component {
                 </section>
                 <section className={classes.relatedProducts}>
                     <h2 className={classes.relatedProductsTitle}>
-                        <span>Recommended Similar Products</span>
+                        <span>Similar Products</span>
                     </h2>
                 </section>
             </article>

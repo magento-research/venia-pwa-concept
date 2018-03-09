@@ -5,22 +5,20 @@ import Item from './item';
 
 class Items extends Component {
     static propTypes = {
-        getKey: PropTypes.func
+        itemComponent: PropTypes.func,
+        items: PropTypes.objectOf(PropTypes.object)
     };
 
     static defaultProps = {
-        getKey: ({ key }) => key,
         itemComponent: Item
     };
 
     render() {
-        const { getKey, itemComponent: ItemComponent, items } = this.props;
+        const { itemComponent: ItemComponent, items } = this.props;
 
-        return items.map((item, index) => {
-            const key = getKey(item, index);
-
-            return <ItemComponent key={key} item={item} />;
-        });
+        return Object.entries(items).map(([key, item]) => (
+            <ItemComponent key={key} item={item} />
+        ));
     }
 }
 

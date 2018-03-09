@@ -1,3 +1,10 @@
 .root {
-  display: block;
+  border-bottom: 1px solid rgb(var(--venia-border));
+  margin: 0 1.5rem;
+  padding: 1.5rem 0;
+}
+
+.title {
+  color: rgb(var(--venia-text-alt));
+  margin-bottom: 1rem;
 }

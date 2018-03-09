@@ -1,3 +1,6 @@
 .root {
-  display: block;
+  display: grid;
+  grid-auto-columns: min-content;
+  grid-auto-flow: column;
+  grid-gap: 1rem;
 }

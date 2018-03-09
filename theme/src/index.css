@@ -24,7 +24,7 @@ html {
 
 body {
   background-color: white;
-  color: rgb(--venia-text);
+  color: rgb(var(--venia-text));
   margin: 0;
   padding: 0;
 }

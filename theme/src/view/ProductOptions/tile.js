@@ -8,6 +8,10 @@ class Tile extends Component {
     static propTypes = {
         classes: PropTypes.shape({
             root: PropTypes.string
+        }),
+        item: PropTypes.shape({
+            description: PropTypes.string,
+            label: PropTypes.string
         })
     };
 
@@ -16,11 +20,19 @@ class Tile extends Component {
         const { description, label } = item;
 
         return (
-            <div className={classes.root} title={description}>
+            <button
+                className={classes.root}
+                title={description}
+                onClick={this.handleClick}
+            >
                 <span>{label}</span>
-            </div>
+            </button>
         );
     }
+
+    handleClick = () => {
+        console.log('clicked');
+    };
 }
 
 export default classify(defaultClasses)(Tile);

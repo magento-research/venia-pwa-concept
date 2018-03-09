@@ -15,12 +15,12 @@ class Option extends Component {
     };
 
     render() {
-        const { classes, name, values } = this.props;
+        const { classes, label, values } = this.props;
 
         return (
             <div className={classes.root}>
-                <h3>
-                    <span>{name}</span>
+                <h3 className={classes.title}>
+                    <span>{label}</span>
                 </h3>
                 <TileList items={values} />
             </div>

@@ -7,3 +7,45 @@
   line-height: 1.5rem;
   padding: 1rem;
 }
+
+.section {
+  margin: 0 1.5rem;
+  padding: 1.5rem 0;
+}
+
+.sectionTitle {
+  align-items: center;
+  display: flex;
+  line-height: 1.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.imageCarousel {
+  align-items: center;
+  background-color: rgb(var(--venia-grey));
+  color: rgb(var(--venia-text-alt));
+  display: flex;
+  height: 600px;
+  justify-content: center;
+}
+
+.description,
+.additionalInfo,
+.relatedProducts {
+  composes: section;
+}
+
+.description,
+.additionalInfo {
+  border-bottom: 1px solid rgb(var(--venia-border));
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.descriptionTitle,
+.additionalInfoTitle,
+.relatedProductsTitle {
+  composes: sectionTitle;
+}
