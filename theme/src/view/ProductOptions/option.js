@@ -2,27 +2,46 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
+import SwatchList from './swatchList';
 import TileList from './tileList';
 import defaultClasses from './option.css';
+
+const optionTypes = ['color', 'string'];
 
 class Option extends Component {
     static propTypes = {
         classes: PropTypes.shape({
             root: PropTypes.string
         }),
-        name: PropTypes.node,
-        values: PropTypes.arrayOf(PropTypes.object)
+        name: PropTypes.node.isRequired,
+        type: PropTypes.oneOf(optionTypes).isRequired,
+        values: PropTypes.arrayOf(PropTypes.object).isRequired
     };
 
+    static defaultProps = {
+        type: 'string'
+    };
+
+    get listComponent() {
+        const { type } = this.props;
+
+        if (type === 'color') {
+            return SwatchList;
+        }
+
+        return TileList;
+    }
+
     render() {
-        const { classes, label, values } = this.props;
+        const { classes, name, values } = this.props;
+        const ValueList = this.listComponent;
 
         return (
             <div className={classes.root}>
                 <h3 className={classes.title}>
-                    <span>{label}</span>
+                    <span>{name}</span>
                 </h3>
-                <TileList items={values} />
+                <ValueList items={values} />
             </div>
         );
     }

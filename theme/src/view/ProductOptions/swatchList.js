@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
 import List from 'src/view/List';
-import Tile from './tile';
-import defaultClasses from './tileList.css';
+import Swatch from './swatch';
+import defaultClasses from './swatchList.css';
 
-class TileList extends Component {
+class SwatchList extends Component {
     static propTypes = {
         classes: PropTypes.shape({
             root: PropTypes.string
@@ -16,8 +16,8 @@ class TileList extends Component {
     };
 
     render() {
-        return <List itemComponent={Tile} {...this.props} />;
+        return <List itemComponent={Swatch} {...this.props} />;
     }
 }
 
-export default classify(defaultClasses)(TileList);
+export default classify(defaultClasses)(SwatchList);

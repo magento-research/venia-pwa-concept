@@ -2,9 +2,9 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-import defaultClasses from './tile.css';
+import defaultClasses from './swatch.css';
 
-class Tile extends Component {
+class Swatch extends Component {
     static propTypes = {
         classes: PropTypes.shape({
             root: PropTypes.string
@@ -17,16 +17,16 @@ class Tile extends Component {
 
     render() {
         const { classes, item } = this.props;
-        const { name } = item;
+        const { id, name } = item;
+        const style = { '--swatch-color': id };
 
         return (
             <button
                 className={classes.root}
                 title={name}
+                style={style}
                 onClick={this.handleClick}
-            >
-                <span>{name}</span>
-            </button>
+            />
         );
     }
 
@@ -35,4 +35,4 @@ class Tile extends Component {
     };
 }
 
-export default classify(defaultClasses)(Tile);
+export default classify(defaultClasses)(Swatch);

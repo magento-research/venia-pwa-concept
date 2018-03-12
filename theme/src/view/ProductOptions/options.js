@@ -11,7 +11,7 @@ class Options extends Component {
     render() {
         const { options } = this.props;
 
-        return options.map(option => <Option key={option.key} {...option} />);
+        return options.map(option => <Option key={option.id} {...option} />);
     }
 }
 

@@ -20,7 +20,7 @@ class List extends Component {
     };
 
     static defaultProps = {
-        getItemKey: ({ key }) => key,
+        getItemKey: ({ id }) => id,
         itemComponent: Item
     };
 

@@ -1,11 +1,23 @@
 .root {
-  display: grid;
+  display: block;
 }
 
 .title {
-  font-size: 1rem;
-  line-height: 1.5rem;
+  align-items: center;
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr max-content;
+  line-height: 1.5;
   padding: 1rem;
+}
+
+.productName {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.productPrice {
+  display: block;
 }
 
 .section {

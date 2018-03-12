@@ -29,9 +29,14 @@ class Product extends Component {
 
         return (
             <article className={classes.root}>
-                <h1 className={classes.title}>
-                    <span>{data.name}</span>
-                </h1>
+                <section className={classes.title}>
+                    <h1 className={classes.productName}>
+                        <span>{data.name}</span>
+                    </h1>
+                    <p className={classes.productPrice}>
+                        <span>{data.price}</span>
+                    </p>
+                </section>
                 <section className={classes.imageCarousel}>
                     <span>image</span>
                 </section>
