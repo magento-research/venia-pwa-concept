@@ -8,8 +8,8 @@ const {
     Webpack: {
         MagentoRootComponentsPlugin,
         ServiceWorkerPlugin,
-        Resolver,
-        DevServer
+        MagentoResolver,
+        PWADevServer
     }
 } = require('@magento/pwa-buildpack');
 
@@ -78,10 +78,9 @@ module.exports = async env => {
                 }
             ]
         },
-        resolve: Resolver.configure({
+        resolve: await MagentoResolver.configure({
             paths: {
-                root: __dirname,
-                modules: 'node_modules'
+                root: __dirname
             }
         }),
         plugins: [
@@ -120,7 +119,7 @@ module.exports = async env => {
 
     } else {
 
-        config.devServer = await DevServer.configure({
+        config.devServer = await PWADevServer.configure({
             publicPath,
             backendDomain,
             serviceWorkerFileName,
