@@ -19,6 +19,7 @@
     "start": "webpack-dev-server --progress --color --env development",
     "start:debug": "node --inspect-brk ./node_modules/.bin/webpack-dev-server --progress --color --env development",
     "test": "run-p jest prettier:check lint",
+    "test:clear": "jest --clearCache",
     "test:debug": "node --inspect ./node_modules/.bin/jest -i",
     "test:dev": "jest --watch"
   },
