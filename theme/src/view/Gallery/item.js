@@ -2,16 +2,11 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
+import { imagePlaceholderUri } from 'src/constants';
 import defaultClasses from './item.css';
 
 const imageWidth = '300';
 const imageHeight = '372';
-
-// corresponds to a 300x372 transparent png
-// keep in sync with constants above
-// TODO: generate this programmatically?
-const imagePlaceholderUri =
-    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAAfCAQAAAC4ua71AAAAGklEQVR42mNkIBkwjmoZ1TKqZVTLqJYRpgUAaP0AIAQAObYAAAAASUVORK5CYII=';
 
 const ItemPlaceholder = ({ children, classes }) => (
     <div className={classes.root_pending}>
