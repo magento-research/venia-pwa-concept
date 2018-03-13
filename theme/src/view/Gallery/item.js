@@ -26,6 +26,8 @@ class GalleryItem extends Component {
         classes: PropTypes.shape({
             image: PropTypes.string,
             image_pending: PropTypes.string,
+            imagePlaceholder: PropTypes.string,
+            imagePlaceholder_pending: PropTypes.string,
             images: PropTypes.string,
             images_pending: PropTypes.string,
             name: PropTypes.string,

@@ -9,14 +9,16 @@ configure({ adapter: new Adapter() });
 const classes = {
     image: 'a',
     image_pending: 'b',
-    images: 'c',
-    images_pending: 'd',
-    name: 'e',
-    name_pending: 'f',
-    price: 'g',
-    price_pending: 'h',
-    root: 'i',
-    root_pending: 'j'
+    imagePlaceholder: 'c',
+    imagePlaceholder_pending: 'd',
+    images: 'e',
+    images_pending: 'f',
+    name: 'g',
+    name_pending: 'h',
+    price: 'i',
+    price_pending: 'j',
+    root: 'k',
+    root_pending: 'l'
 };
 
 const validItem = {
@@ -33,17 +35,19 @@ const validItem = {
  */
 test('renders a placeholder item while awaiting item', () => {
     const wrapper = shallow(<Item classes={classes} />).dive();
+    const child = wrapper.find('ItemPlaceholder');
+    const props = { classes };
 
-    expect(wrapper.hasClass(classes.root_pending)).toBe(true);
+    expect(child).toHaveLength(1);
+    expect(child.props()).toMatchObject(props);
 });
 
-test('renders only a placeholder image while awaiting item', () => {
-    const wrapper = shallow(<Item classes={classes} />);
-    const placeholder = wrapper.first().dive();
-    const images = placeholder.find(classes.images_pending);
+test('passes classnames to the placeholder item', () => {
+    const wrapper = shallow(<Item classes={classes} />)
+        .dive()
+        .dive();
 
-    expect(images).toHaveLength(placeholder.html());
-    // expect(images.first().hasClass(classes.image_pending)).toBe(true);
+    expect(wrapper.hasClass(classes.root_pending));
 });
 
 /**
@@ -51,28 +55,30 @@ test('renders only a placeholder image while awaiting item', () => {
  * `item` is a valid data object
  * `showImage` is `false`
  */
-test('renders placeholder and real image when `showImage: false`', () => {
+test('renders both images when `showImage: false`', () => {
     const wrapper = shallow(
         <Item classes={classes} item={validItem} showImage={false} />
-    );
-    const image = wrapper.find(classes.image);
+    ).dive();
+    const realImage = wrapper.find({ className: classes.image_pending });
+    const placeholderImage = wrapper.find({
+        className: classes.imagePlaceholder
+    });
 
-    expect(image).toHaveLength(2);
-    expect(image.first().hasClass(classes.image_pending)).toBe(true);
-    expect(image.last().hasClass(classes.image_pending)).toBe(false);
+    expect(realImage).toHaveLength(1);
+    expect(placeholderImage).toHaveLength(1);
 });
 
-test('renders real image even without `onLoad` and `onError`', () => {
+test('handles `load` and `error` events', () => {
     const wrapper = shallow(
         <Item classes={classes} item={validItem} showImage={false} />
-    );
-    const image = wrapper.find(classes.image).last();
+    ).dive();
+    const image = wrapper.find({ className: classes.image_pending }).first();
 
     expect(() => image.simulate('load')).not.toThrow();
     expect(() => image.simulate('error')).not.toThrow();
 });
 
-test('calls `onLoad` properly on image `load`', () => {
+test('calls `onLoad` on image `load`', () => {
     const handleLoad = jest.fn();
     const wrapper = shallow(
         <Item
@@ -81,17 +87,17 @@ test('calls `onLoad` properly on image `load`', () => {
             showImage={false}
             onLoad={handleLoad}
         />
-    );
+    ).dive();
 
     wrapper
-        .find(classes.image)
-        .last()
+        .find({ className: classes.image_pending })
+        .first()
         .simulate('load');
 
     expect(handleLoad).toBeCalledWith(validItem.key);
 });
 
-test('calls `onError` properly on image `error`', () => {
+test('calls `onError` on image `error`', () => {
     const handleError = jest.fn();
     const wrapper = shallow(
         <Item
@@ -100,11 +106,11 @@ test('calls `onError` properly on image `error`', () => {
             showImage={false}
             onError={handleError}
         />
-    );
+    ).dive();
 
     wrapper
-        .find(classes.image)
-        .last()
+        .find({ className: classes.image_pending })
+        .first()
         .simulate('error');
 
     expect(handleError).toBeCalledWith(validItem.key);
@@ -118,9 +124,8 @@ test('calls `onError` properly on image `error`', () => {
 test('renders only the real image when `showImage: true`', () => {
     const wrapper = shallow(
         <Item classes={classes} item={validItem} showImage={true} />
-    );
-    const image = wrapper.find(classes.image);
+    ).dive();
+    const image = wrapper.find({ className: classes.image });
 
     expect(image).toHaveLength(1);
-    expect(image.first().hasClass(classes.image_pending)).toBe(false);
 });
