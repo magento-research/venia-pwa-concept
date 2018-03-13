@@ -60,6 +60,7 @@
     "express": "^4.16.2",
     "file-loader": "^1.1.9",
     "http-proxy-middleware": "^0.17.4",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^22.1.4",
     "make-fetch-happen": "^2.6.0",
     "node-forge": "^0.7.1",
