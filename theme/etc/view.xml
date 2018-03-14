@@ -245,8 +245,8 @@
   </vars>
   <vars module="Magento_Pwa">
     <var name="serviceworker_name">sw.js</var>
-    <var name="devserver_host">https://magento-venia.local.pwadev/</var>
-    <var name="devserver_port">8000</var>
+    <var name="devserver_host">https://magento-venia1.local.pwadev/</var>
+    <var name="devserver_port">8001</var>
   </vars>
   <exclude>
     <item type="file">Lib::jquery/jquery.min.js</item>

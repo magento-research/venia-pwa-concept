@@ -1,9 +1,6 @@
-const os = require('os');
-const path = require('path');
 const dotenv = require('dotenv');
 const webpack = require('webpack');
 const { URL } = require('url');
-const UglifyPlugin = require('uglifyjs-webpack-plugin');
 const configureBabel = require('./babel.config.js');
 const {
     Webpack: M2Webpack,
@@ -81,9 +78,9 @@ async function createBaseConfig(buildSession, babelOptions) {
                 }
             ]
         },
-        resolve: await M2Webpack.Resolver.configure(buildSession),
+        resolve: await M2Webpack.MagentoResolver.configure(buildSession),
         plugins: [
-            new M2Webpack.RootComponentsChunksPlugin(),
+            new M2Webpack.MagentoRootComponentsPlugin(),
             new webpack.NoEmitOnErrorsPlugin(),
             new webpack.EnvironmentPlugin(buildSession.envToVars()),
             new M2Webpack.ServiceWorkerPlugin(buildSession)
