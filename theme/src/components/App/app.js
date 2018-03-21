@@ -8,7 +8,7 @@ import classify from 'src/classify';
 import Product from 'src/RootComponents/Product';
 import Page from 'src/components/Page';
 import { selectNavigation } from 'src/store/reducers/navigation';
-import { extract } from 'src/utils';
+import extract from 'src/util/extract';
 import defaultClasses from './app.css';
 
 export class App extends Component {

@@ -11,12 +11,11 @@ class SwatchList extends Component {
         classes: PropTypes.shape({
             root: PropTypes.string
         }),
-        itemComponent: PropTypes.func,
         items: PropTypes.arrayOf(PropTypes.object)
     };
 
     render() {
-        return <List itemComponent={Swatch} {...this.props} />;
+        return <List renderItem={Swatch} {...this.props} />;
     }
 }
 

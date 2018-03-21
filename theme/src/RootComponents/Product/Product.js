@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
 import Options from 'src/view/ProductOptions';
+import Quantity from 'src/view/ProductQuantity';
 import RichText from 'src/view/RichText';
 import mockData from './mockData';
 import defaultClasses from './product.css';
@@ -43,6 +44,12 @@ class Product extends Component {
                 <section className={classes.options}>
                     <Options options={data.options} />
                 </section>
+                <section className={classes.quantity}>
+                    <h2 className={classes.quantityTitle}>
+                        <span>Quantity</span>
+                    </h2>
+                    <Quantity />
+                </section>
                 <section className={classes.description}>
                     <h2 className={classes.descriptionTitle}>
                         <span>Product Description</span>
@@ -51,7 +58,7 @@ class Product extends Component {
                 </section>
                 <section className={classes.additionalInfo}>
                     <h2 className={classes.additionalInfoTitle}>
-                        <span>Additional Information</span>
+                        <span>Features</span>
                     </h2>
                     <RichText content={data.additionalInfo} />
                 </section>

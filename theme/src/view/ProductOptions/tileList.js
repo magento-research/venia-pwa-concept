@@ -11,12 +11,11 @@ class TileList extends Component {
         classes: PropTypes.shape({
             root: PropTypes.string
         }),
-        itemComponent: PropTypes.func,
         items: PropTypes.arrayOf(PropTypes.object)
     };
 
     render() {
-        return <List itemComponent={Tile} {...this.props} />;
+        return <List renderItem={Tile} {...this.props} />;
     }
 }
 

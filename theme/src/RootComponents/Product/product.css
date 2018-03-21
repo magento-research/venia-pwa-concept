@@ -8,7 +8,7 @@
   grid-gap: 1rem;
   grid-template-columns: 1fr max-content;
   line-height: 1.5;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
 }
 
 .productName {
@@ -21,6 +21,7 @@
 }
 
 .section {
+  border-bottom: 1px solid rgb(var(--venia-border));
   margin: 0 1.5rem;
   padding: 1.5rem 0;
 }
@@ -28,7 +29,9 @@
 .sectionTitle {
   align-items: center;
   display: flex;
-  line-height: 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5;
   justify-content: center;
   margin-bottom: 1.5rem;
   text-align: center;
@@ -43,21 +46,23 @@
   justify-content: center;
 }
 
+.quantity,
 .description,
 .additionalInfo,
 .relatedProducts {
   composes: section;
 }
 
-.description,
-.additionalInfo {
-  border-bottom: 1px solid rgb(var(--venia-border));
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-}
-
 .descriptionTitle,
 .additionalInfoTitle,
 .relatedProductsTitle {
   composes: sectionTitle;
+}
+
+.quantityTitle {
+  composes: title from '../../view/ProductOptions/option.css';
+}
+
+.relatedProducts {
+  border-bottom-width: 0;
 }

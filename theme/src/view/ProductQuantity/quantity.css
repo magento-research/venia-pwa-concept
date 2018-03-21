@@ -1,0 +1,35 @@
+.root {
+  align-items: center;
+  display: grid;
+  justify-content: left;
+  grid-gap: 1rem;
+  grid-template-columns: 1fr max-content;
+}
+
+.input {
+  background-color: currentColor;
+  border: 0;
+  border-radius: 1px;
+  color: rgb(var(--venia-teal));
+  height: 2px;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  width: 192px;
+  -webkit-appearance: none;
+}
+
+.input::-webkit-slider-thumb {
+  background-color: currentColor;
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  -webkit-appearance: none;
+}
+
+.input:focus::-webkit-slider-thumb {
+  border-radius: 50%;
+  border: 2px solid rgba(var(--venia-teal), 0.5);
+  height: 16px;
+  width: 16px;
+}

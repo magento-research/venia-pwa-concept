@@ -1,13 +1,12 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
-import classify from 'src/classify';
+import normalizeArray from 'src/util/normalizeArray';
+import fromRenderProp from 'src/util/fromRenderProp';
 import Items from './items';
-import Item from './item';
-import defaultClasses from './list.css';
 
-const normalizeItems = (items, getKey) =>
-    items.reduce((r, v, i) => ({ ...r, [getKey(v, i)]: v }), {});
+const normalizeItems = (items, getItemKey) =>
+    Array.isArray(items) ? normalizeArray(items, getItemKey) : items;
 
 class List extends Component {
     static propTypes = {
@@ -15,25 +14,41 @@ class List extends Component {
             root: PropTypes.string
         }),
         getItemKey: PropTypes.func,
-        itemComponent: PropTypes.func,
-        items: PropTypes.arrayOf(PropTypes.object)
+        items: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.object),
+            PropTypes.objectOf(PropTypes.object)
+        ]).isRequired,
+        render: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+        renderItem: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     };
 
     static defaultProps = {
+        classes: {},
         getItemKey: ({ id }) => id,
-        itemComponent: Item
+        items: {},
+        render: 'div',
+        renderItem: 'div'
     };
 
     render() {
-        const { classes, getItemKey, itemComponent, items } = this.props;
+        const {
+            classes,
+            getItemKey,
+            items,
+            render,
+            renderItem,
+            ...restProps
+        } = this.props;
+        const customProps = { classes, items };
         const normalizedItems = normalizeItems(items, getItemKey);
+        const Root = fromRenderProp(render, Object.keys(customProps));
 
         return (
-            <div className={classes.root}>
-                <Items itemComponent={itemComponent} items={normalizedItems} />
-            </div>
+            <Root className={classes.root} {...customProps} {...restProps}>
+                <Items items={normalizedItems} renderItem={renderItem} />
+            </Root>
         );
     }
 }
 
-export default classify(defaultClasses)(List);
+export default List;

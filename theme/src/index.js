@@ -1,7 +1,6 @@
 import Peregrine from '@magento/peregrine';
 
-import { extract } from 'src/utils';
-
+import extract from 'src/util/extract';
 import './index.css';
 
 const app = new Peregrine();
