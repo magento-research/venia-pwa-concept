@@ -2,7 +2,7 @@ import { createFactory } from 'react';
 
 const factoryCache = new Map();
 
-const filterProps = (props = {}, blacklist = []) =>
+export const filterProps = (props = {}, blacklist = []) =>
     Object.entries(props).reduce((r, [k, v]) => {
         if (!blacklist.includes(k)) {
             r[k] = v;
