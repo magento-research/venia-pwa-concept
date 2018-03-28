@@ -2,6 +2,7 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
+import Carousel from 'src/view/ProductImageCarousel';
 import Options from 'src/view/ProductOptions';
 import Quantity from 'src/view/ProductQuantity';
 import RichText from 'src/view/RichText';
@@ -16,7 +17,17 @@ class Product extends Component {
         data: PropTypes.shape({
             additionalInfo: PropTypes.string,
             description: PropTypes.string,
+            images: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string
+                })
+            ),
             name: PropTypes.string,
+            options: PropTypes.arrayOf(
+                PropTypes.shape({
+                    id: PropTypes.string
+                })
+            ),
             price: PropTypes.string
         })
     };
@@ -39,7 +50,12 @@ class Product extends Component {
                     </p>
                 </section>
                 <section className={classes.imageCarousel}>
-                    <span>image</span>
+                    <Carousel images={data.images} />
+                </section>
+                <section className={classes.actions}>
+                    <button className={classes.action}>
+                        <span>Add to Wishlist</span>
+                    </button>
                 </section>
                 <section className={classes.options}>
                     <Options options={data.options} />
@@ -50,20 +66,25 @@ class Product extends Component {
                     </h2>
                     <Quantity />
                 </section>
+                <section className={classes.cartActions}>
+                    <button className={classes.addToCart}>
+                        <span>Add to Cart</span>
+                    </button>
+                </section>
                 <section className={classes.description}>
                     <h2 className={classes.descriptionTitle}>
                         <span>Product Description</span>
                     </h2>
                     <RichText content={data.description} />
                 </section>
-                <section className={classes.additionalInfo}>
-                    <h2 className={classes.additionalInfoTitle}>
-                        <span>Features</span>
+                <section className={classes.details}>
+                    <h2 className={classes.detailsTitle}>
+                        <span>Details</span>
                     </h2>
                     <RichText content={data.additionalInfo} />
                 </section>
-                <section className={classes.relatedProducts}>
-                    <h2 className={classes.relatedProductsTitle}>
+                <section className={classes.related}>
+                    <h2 className={classes.relatedTitle}>
                         <span>Similar Products</span>
                     </h2>
                 </section>

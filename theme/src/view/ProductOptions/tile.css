@@ -9,6 +9,14 @@
   padding: 0 0.75rem;
 }
 
+@media(min-width: 1024px) {
+  .root {
+    height: 2rem;
+    min-width: 2rem;
+    padding: 0;
+  }
+}
+
 .root_selected {
   background-color: rgb(var(--venia-text));
   color: white;
