@@ -1,6 +1,4 @@
-import { createFactory } from 'react';
-
-const factoryCache = new Map();
+import { createElement } from 'react';
 
 export const filterProps = (props = {}, blacklist = []) =>
     Object.entries(props).reduce((r, [k, v]) => {
@@ -12,13 +10,10 @@ export const filterProps = (props = {}, blacklist = []) =>
 
 const fromRenderProp = (elementType, customProps) => {
     const isBasic = typeof elementType === 'string';
-    const factory = factoryCache.get(elementType) || createFactory(elementType);
-
-    factoryCache.set(elementType, factory);
 
     return isBasic
-        ? props => factory(filterProps(props, customProps))
-        : props => factory(props);
+        ? props => createElement(elementType, filterProps(props, customProps))
+        : props => createElement(elementType, props);
 };
 
 export default fromRenderProp;
