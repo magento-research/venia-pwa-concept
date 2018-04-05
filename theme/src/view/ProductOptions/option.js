@@ -23,13 +23,7 @@ class Option extends Component {
     };
 
     get listComponent() {
-        const { type } = this.props;
-
-        if (type === 'color') {
-            return SwatchList;
-        }
-
-        return TileList;
+        return this.props.type === 'color' ? SwatchList : TileList;
     }
 
     render() {

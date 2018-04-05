@@ -1,6 +1,6 @@
 import Peregrine from '@magento/peregrine';
 
-import extract from 'src/util/extract';
+import getNamedExport from 'src/util/getNamedExport';
 import './index.css';
 
 const app = new Peregrine();
@@ -19,7 +19,7 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-extract(import('src/components/App'))
+getNamedExport(import('src/view/App'))
     .then(App => {
         app.component = App;
         app.mount(container);

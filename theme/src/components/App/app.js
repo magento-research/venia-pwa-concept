@@ -8,7 +8,7 @@ import classify from 'src/classify';
 import Product from 'src/RootComponents/Product';
 import Page from 'src/components/Page';
 import { selectNavigation } from 'src/store/reducers/navigation';
-import extract from 'src/util/extract';
+import getNamedExport from 'src/util/getNamedExport';
 import defaultClasses from './app.css';
 
 export class App extends Component {
@@ -19,7 +19,7 @@ export class App extends Component {
     };
 
     componentDidMount() {
-        extract(import('src/store/reducers/navigation'))
+        getNamedExport(import('src/store/reducers/navigation'))
             .then(reducer => {
                 app.addReducer('navigation', reducer);
             })

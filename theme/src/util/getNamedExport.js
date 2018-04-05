@@ -5,7 +5,7 @@
  * @param {string} name - The binding to retrieve
  * @returns {Promise<*>}
  */
-const extract = (obj, name = 'default') =>
+const getNamedExport = (obj, name = 'default') =>
     Promise.resolve(obj).then(mod => {
         if (!mod || typeof mod !== 'object') {
             throw new Error('Invalid namespace object provided.');
@@ -18,4 +18,4 @@ const extract = (obj, name = 'default') =>
         return mod[name];
     });
 
-export default extract;
+export default getNamedExport;
