@@ -22,12 +22,21 @@ class ThumbnailList extends Component {
     render() {
         return (
             <List
-                renderItem={Thumbnail}
-                getItemKey={getItemKey}
                 {...this.props}
+                getItemKey={getItemKey}
+                renderItem={Thumbnail}
+                onSelectionChange={this.handleSelectionChange}
             />
         );
     }
+
+    handleSelectionChange = selection => {
+        const { onSelectionChange } = this.props;
+
+        if (onSelectionChange) {
+            onSelectionChange(selection);
+        }
+    };
 }
 
 export default classify(defaultClasses)(ThumbnailList);

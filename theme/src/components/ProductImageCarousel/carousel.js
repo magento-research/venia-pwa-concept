@@ -5,9 +5,6 @@ import classify from 'src/classify';
 import ThumbnailList from './thumbnailList';
 import defaultClasses from './carousel.css';
 
-const uri =
-    'iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAQAAADIpIVQAAAADklEQVR42mNkgAJGIhgAALQABsHyMOcAAAAASUVORK5CYII=';
-
 class Carousel extends Component {
     static propTypes = {
         classes: PropTypes.shape({
@@ -21,20 +18,32 @@ class Carousel extends Component {
         )
     };
 
+    state = {
+        selectedIndex: null
+    };
+
     render() {
         const { classes, images } = this.props;
+        const { selectedIndex } = this.state;
+        const currentImage = images[selectedIndex];
+        const src = currentImage && `data:image/png;base64,${currentImage.uri}`;
 
         return (
             <div className={classes.root}>
-                <img
-                    className={classes.currentImage}
-                    src={`data:image/png;base64,${uri}`}
-                    alt="product"
+                <img className={classes.currentImage} src={src} alt="product" />
+                <ThumbnailList
+                    items={images}
+                    onSelectionChange={this.handleSelectionChange}
                 />
-                <ThumbnailList items={images} />
             </div>
         );
     }
+
+    handleSelectionChange = selection => {
+        const { value: selectedIndex } = selection.values().next();
+
+        this.setState(() => ({ selectedIndex }));
+    };
 }
 
 export default classify(defaultClasses)(Carousel);

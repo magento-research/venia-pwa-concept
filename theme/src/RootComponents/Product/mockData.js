@@ -5,16 +5,24 @@ const data = {
         '<p>Team these printed palazzo pants with a solid tank top and summer-ready sandals. Cut to fit like your most comfortable trousers, the fine cotton fabric promises a featherlike feel. Pockets on either side make these pants versatile and practical.</p><p><strong>Item # 315177</strong><br><strong>UPC # 885259775004</strong></p>',
     images: [
         {
-            id: '0'
+            id: '0',
+            uri:
+                'iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAAE0lEQVR42mP8z8BQz4AEGKkgAABu/gd8j7bd+wAAAABJRU5ErkJggg=='
         },
         {
-            id: '1'
+            id: '1',
+            uri:
+                'iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAAE0lEQVR42mNk+M9Qz4AEGKkgAABqAwd8dTP8NwAAAABJRU5ErkJggg=='
         },
         {
-            id: '2'
+            id: '2',
+            uri:
+                'iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAAE0lEQVR42mNkYPhfz4AEGKkgAABlCAd8DQKbsgAAAABJRU5ErkJggg=='
         },
         {
-            id: '3'
+            id: '3',
+            uri:
+                'iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAYAAABirU3bAAAAE0lEQVR42mP8/5+hngEJMFJBAABjGAx3jAPvoQAAAABJRU5ErkJggg=='
         }
     ],
     name: 'Fitted Dress with Belt',

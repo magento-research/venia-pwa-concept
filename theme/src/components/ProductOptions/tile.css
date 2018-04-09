@@ -18,6 +18,15 @@
 }
 
 .root_selected {
+  composes: root;
   background-color: rgb(var(--venia-text));
   color: white;
+}
+
+.root_focused {
+  composes: root;
+}
+
+.root_selected_focused {
+  composes: root_selected root_focused;
 }

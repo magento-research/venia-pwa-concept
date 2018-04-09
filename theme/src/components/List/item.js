@@ -18,8 +18,15 @@ class Item extends Component {
     };
 
     render() {
-        const { classes, item, render, ...restProps } = this.props;
-        const customProps = { classes, item };
+        const {
+            classes,
+            hasFocus,
+            isSelected,
+            item,
+            render,
+            ...restProps
+        } = this.props;
+        const customProps = { classes, hasFocus, isSelected, item };
         const Root = fromRenderProp(render, Object.keys(customProps));
 
         return (

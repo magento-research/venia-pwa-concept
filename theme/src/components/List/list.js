@@ -14,14 +14,16 @@ class List extends Component {
         items: PropTypes.oneOfType([PropTypes.instanceOf(Map), PropTypes.array])
             .isRequired,
         render: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-        renderItem: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
+        renderItem: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+        selectionModel: PropTypes.oneOf(['check', 'radio'])
     };
 
     static defaultProps = {
         classes: {},
         items: [],
         render: 'div',
-        renderItem: 'div'
+        renderItem: 'div',
+        selectionModel: 'radio'
     };
 
     render() {
@@ -31,19 +33,41 @@ class List extends Component {
             items,
             render,
             renderItem,
+            onSelectionChange,
+            selectionModel,
             ...restProps
         } = this.props;
-        const customProps = { classes, items };
+
+        const customProps = {
+            classes,
+            items,
+            onSelectionChange,
+            selectionModel
+        };
+
         const transformItem = (v, i) => [getItemKey(v, i), v];
         const itemsMap = toMap(items, transformItem);
         const Root = fromRenderProp(render, Object.keys(customProps));
 
         return (
             <Root className={classes.root} {...customProps} {...restProps}>
-                <Items items={itemsMap} renderItem={renderItem} />
+                <Items
+                    items={itemsMap}
+                    renderItem={renderItem}
+                    selectionModel={selectionModel}
+                    onSelectionChange={this.handleSelectionChange}
+                />
             </Root>
         );
     }
+
+    handleSelectionChange = selection => {
+        const { onSelectionChange } = this.props;
+
+        if (onSelectionChange) {
+            onSelectionChange(selection);
+        }
+    };
 }
 
 export default List;

@@ -1,31 +1,56 @@
-import { Component, createElement } from 'react';
+import { Component, createElement, createRef } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
 import defaultClasses from './thumbnail.css';
 
-const uri =
-    'iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAQAAADIpIVQAAAADklEQVR42mNkgAJGIhgAALQABsHyMOcAAAAASUVORK5CYII=';
-
 class Thumbnail extends Component {
     static propTypes = {
         classes: PropTypes.shape({
-            root: PropTypes.string
+            image: PropTypes.string,
+            image_focused: PropTypes.string,
+            image_selected: PropTypes.string,
+            image_selected_focused: PropTypes.string,
+            root: PropTypes.string,
+            root_focused: PropTypes.string,
+            root_selected: PropTypes.string,
+            root_selected_focused: PropTypes.string
         })
     };
 
+    itemRef = createRef();
+
+    componentDidUpdate() {
+        if (this.props.hasFocus) {
+            this.itemRef.current.focus();
+        }
+    }
+
     render() {
-        const { classes } = this.props;
+        const { item, onBlur, onClick, onFocus } = this.props;
+        const eventListeners = { onBlur, onClick, onFocus };
 
         return (
-            <div className={classes.root}>
+            <button
+                ref={this.itemRef}
+                className={this.getClass('root')}
+                {...eventListeners}
+            >
                 <img
-                    className={classes.image}
-                    src={`data:image/png;base64,${uri}`}
+                    className={this.getClass('image')}
+                    src={`data:image/png;base64,${item.uri}`}
                     alt="thumbnail"
                 />
-            </div>
+            </button>
         );
+    }
+
+    getClass(key) {
+        const { classes, hasFocus, isSelected } = this.props;
+        const selected = isSelected ? '_selected' : '';
+        const focused = hasFocus ? '_focused' : '';
+
+        return classes[`${key}${selected}${focused}`];
     }
 }
 
