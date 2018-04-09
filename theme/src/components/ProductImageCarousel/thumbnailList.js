@@ -26,6 +26,7 @@ class ThumbnailList extends Component {
                 getItemKey={getItemKey}
                 renderItem={Thumbnail}
                 onSelectionChange={this.handleSelectionChange}
+                selectionModel="radio"
             />
         );
     }

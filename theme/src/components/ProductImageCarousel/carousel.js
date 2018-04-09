@@ -5,6 +5,9 @@ import classify from 'src/classify';
 import ThumbnailList from './thumbnailList';
 import defaultClasses from './carousel.css';
 
+const defaultUri =
+    'iVBORw0KGgoAAAANSUhEUgAAAAQAAAAFCAQAAADIpIVQAAAADklEQVR42mNkgAJGIhgAALQABsHyMOcAAAAASUVORK5CYII=';
+
 class Carousel extends Component {
     static propTypes = {
         classes: PropTypes.shape({
@@ -26,7 +29,8 @@ class Carousel extends Component {
         const { classes, images } = this.props;
         const { selectedIndex } = this.state;
         const currentImage = images[selectedIndex];
-        const src = currentImage && `data:image/png;base64,${currentImage.uri}`;
+        const uri = currentImage ? currentImage.uri : defaultUri;
+        const src = `data:image/png;base64,${uri}`;
 
         return (
             <div className={classes.root}>

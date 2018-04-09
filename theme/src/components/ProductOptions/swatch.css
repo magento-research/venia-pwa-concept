@@ -3,6 +3,7 @@
   background-color: rgb(var(--swatch-color));
   border-color: rgba(0, 0, 0, 0.1);
   color: white;
+  padding: 0;
 }
 
 .root_selected {

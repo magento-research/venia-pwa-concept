@@ -15,6 +15,7 @@ class List extends Component {
             .isRequired,
         render: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
         renderItem: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+        onSelectionChange: PropTypes.func,
         selectionModel: PropTypes.oneOf(['check', 'radio'])
     };
 
