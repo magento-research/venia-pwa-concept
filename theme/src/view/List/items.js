@@ -5,13 +5,17 @@ import ListItem from './item';
 
 class Items extends Component {
     static propTypes = {
-        items: PropTypes.objectOf(PropTypes.object)
+        items: PropTypes.oneOfType([
+            PropTypes.instanceOf(Map),
+            PropTypes.arrayOf(PropTypes.array)
+        ]).isRequired,
+        renderItem: PropTypes.func
     };
 
     render() {
         const { items, renderItem } = this.props;
 
-        return Object.entries(items).map(([key, item]) => (
+        return Array.from(items, ([key, item]) => (
             <ListItem key={key} render={renderItem} item={item} />
         ));
     }

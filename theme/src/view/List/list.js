@@ -1,12 +1,9 @@
 import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
-import normalizeArray from 'src/util/normalizeArray';
 import fromRenderProp from 'src/util/fromRenderProp';
+import toMap from 'src/util/toMap';
 import Items from './items';
-
-const normalizeItems = (items, getItemKey) =>
-    Array.isArray(items) ? normalizeArray(items, getItemKey) : items;
 
 class List extends Component {
     static propTypes = {
@@ -14,18 +11,15 @@ class List extends Component {
             root: PropTypes.string
         }),
         getItemKey: PropTypes.func,
-        items: PropTypes.oneOfType([
-            PropTypes.arrayOf(PropTypes.object),
-            PropTypes.objectOf(PropTypes.object)
-        ]).isRequired,
+        items: PropTypes.oneOfType([PropTypes.instanceOf(Map), PropTypes.array])
+            .isRequired,
         render: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
         renderItem: PropTypes.oneOfType([PropTypes.func, PropTypes.string])
     };
 
     static defaultProps = {
         classes: {},
-        getItemKey: ({ id }) => id,
-        items: {},
+        items: [],
         render: 'div',
         renderItem: 'div'
     };
@@ -40,12 +34,12 @@ class List extends Component {
             ...restProps
         } = this.props;
         const customProps = { classes, items };
-        const normalizedItems = normalizeItems(items, getItemKey);
+        const itemsMap = getItemKey ? toMap(items, getItemKey) : items;
         const Root = fromRenderProp(render, Object.keys(customProps));
 
         return (
             <Root className={classes.root} {...customProps} {...restProps}>
-                <Items items={normalizedItems} renderItem={renderItem} />
+                <Items items={itemsMap} renderItem={renderItem} />
             </Root>
         );
     }

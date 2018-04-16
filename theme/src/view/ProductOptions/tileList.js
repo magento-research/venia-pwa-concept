@@ -6,6 +6,8 @@ import List from 'src/view/List';
 import Tile from './tile';
 import defaultClasses from './tileList.css';
 
+const getItemKey = ({ id }) => id;
+
 class TileList extends Component {
     static propTypes = {
         classes: PropTypes.shape({
@@ -15,7 +17,9 @@ class TileList extends Component {
     };
 
     render() {
-        return <List renderItem={Tile} {...this.props} />;
+        return (
+            <List renderItem={Tile} getItemKey={getItemKey} {...this.props} />
+        );
     }
 }
 

@@ -6,6 +6,8 @@ import List from 'src/view/List';
 import Swatch from './swatch';
 import defaultClasses from './swatchList.css';
 
+const getItemKey = ({ id }) => id;
+
 class SwatchList extends Component {
     static propTypes = {
         classes: PropTypes.shape({
@@ -15,7 +17,9 @@ class SwatchList extends Component {
     };
 
     render() {
-        return <List renderItem={Swatch} {...this.props} />;
+        return (
+            <List renderItem={Swatch} getItemKey={getItemKey} {...this.props} />
+        );
     }
 }
 

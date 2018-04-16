@@ -6,7 +6,8 @@ import List from 'src/view/List';
 import Option from './option';
 import defaultClasses from './select.css';
 
-const identity = () => {};
+const noop = () => {};
+const getItemKey = ({ value }) => value;
 
 class Select extends Component {
     static propTypes = {
@@ -31,6 +32,7 @@ class Select extends Component {
                 {...props}
                 render="select"
                 renderItem={Option}
+                getItemKey={getItemKey}
                 value={value}
                 onChange={this.handleChange}
             />
@@ -41,11 +43,11 @@ class Select extends Component {
         this.setValue(event.target.value);
     };
 
-    setValue = value => {
-        const callback = this.props.onChange || identity;
+    setValue(value) {
+        const onChange = this.props.onChange || noop;
 
-        this.setState(() => ({ value }), () => callback(value));
-    };
+        this.setState(() => ({ value }), () => onChange(value));
+    }
 }
 
 export default classify(defaultClasses)(Select);

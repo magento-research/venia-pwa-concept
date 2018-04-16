@@ -6,16 +6,27 @@ import List from 'src/view/List';
 import Thumbnail from './thumbnail';
 import defaultClasses from './thumbnailList.css';
 
+const getItemKey = ({ id }) => id;
+
 class ThumbnailList extends Component {
     static propTypes = {
         classes: PropTypes.shape({
             root: PropTypes.string
         }),
-        items: PropTypes.arrayOf(PropTypes.object)
+        items: PropTypes.oneOfType([
+            PropTypes.instanceOf(Map),
+            PropTypes.arrayOf(PropTypes.object)
+        ])
     };
 
     render() {
-        return <List renderItem={Thumbnail} {...this.props} />;
+        return (
+            <List
+                renderItem={Thumbnail}
+                getItemKey={getItemKey}
+                {...this.props}
+            />
+        );
     }
 }
 
