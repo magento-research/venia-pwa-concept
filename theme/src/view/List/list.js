@@ -34,7 +34,8 @@ class List extends Component {
             ...restProps
         } = this.props;
         const customProps = { classes, items };
-        const itemsMap = getItemKey ? toMap(items, getItemKey) : items;
+        const transformItem = (v, i) => [getItemKey(v, i), v];
+        const itemsMap = toMap(items, transformItem);
         const Root = fromRenderProp(render, Object.keys(customProps));
 
         return (
