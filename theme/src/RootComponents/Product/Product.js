@@ -2,10 +2,10 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-import Carousel from 'src/view/ProductImageCarousel';
-import Options from 'src/view/ProductOptions';
-import Quantity from 'src/view/ProductQuantity';
-import RichText from 'src/view/RichText';
+import Carousel from 'src/components/ProductImageCarousel';
+import Options from 'src/components/ProductOptions';
+import Quantity from 'src/components/ProductQuantity';
+import RichText from 'src/components/RichText';
 import mockData from './mockData';
 import defaultClasses from './product.css';
 

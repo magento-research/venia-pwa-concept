@@ -102,7 +102,7 @@
 }
 
 .action {
-  composes: root from '../../view/button.css';
+  composes: root from '../../components/button.css';
   height: 3rem;
 }
 
@@ -116,7 +116,7 @@
 }
 
 .quantityTitle {
-  composes: title from '../../view/ProductOptions/option.css';
+  composes: title from '../../components/ProductOptions/option.css';
 }
 
 .cartActions {
@@ -134,7 +134,7 @@
 }
 
 .addToCart {
-  composes: button from '../../view/button.css';
+  composes: button from '../../components/button.css';
 }
 
 .description {

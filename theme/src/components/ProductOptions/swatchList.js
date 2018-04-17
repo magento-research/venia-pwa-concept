@@ -2,13 +2,13 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-import List from 'src/view/List';
-import Tile from './tile';
-import defaultClasses from './tileList.css';
+import List from 'src/components/List';
+import Swatch from './swatch';
+import defaultClasses from './swatchList.css';
 
 const getItemKey = ({ id }) => id;
 
-class TileList extends Component {
+class SwatchList extends Component {
     static propTypes = {
         classes: PropTypes.shape({
             root: PropTypes.string
@@ -18,9 +18,9 @@ class TileList extends Component {
 
     render() {
         return (
-            <List renderItem={Tile} getItemKey={getItemKey} {...this.props} />
+            <List renderItem={Swatch} getItemKey={getItemKey} {...this.props} />
         );
     }
 }
 
-export default classify(defaultClasses)(TileList);
+export default classify(defaultClasses)(SwatchList);

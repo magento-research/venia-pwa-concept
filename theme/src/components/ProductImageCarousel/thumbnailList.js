@@ -2,7 +2,7 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-import List from 'src/view/List';
+import List from 'src/components/List';
 import Thumbnail from './thumbnail';
 import defaultClasses from './thumbnailList.css';
 

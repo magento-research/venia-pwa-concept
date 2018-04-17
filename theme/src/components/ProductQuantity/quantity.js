@@ -2,7 +2,7 @@ import { Component, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-import Select from 'src/view/Select';
+import Select from 'src/components/Select';
 import mockData from './mockData';
 import defaultClasses from './quantity.css';
 

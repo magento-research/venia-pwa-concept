@@ -19,7 +19,7 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-getNamedExport(import('src/view/App'))
+getNamedExport(import('src/components/App'))
     .then(App => {
         app.component = App;
         app.mount(container);
