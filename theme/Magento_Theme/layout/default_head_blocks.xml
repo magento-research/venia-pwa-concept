@@ -8,6 +8,8 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
   <head>
     <remove src="mage/calendar.css"/>
+    <remove src="mage/gallery/gallery.css" />
+    <remove src="mage/polyfill.js" />
     <remove src="requirejs/require.js"/>
     <remove src="css/styles-m.css" />
     <remove src="css/styles-l.css" />
