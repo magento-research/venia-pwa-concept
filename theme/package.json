@@ -1,7 +1,7 @@
 {
-  "name": "rush",
+  "name": "venia",
   "version": "0.1.0",
-  "description": "Rush theme for Magento 2",
+  "description": "Venia theme for Magento 2",
   "license": "(OSL-3.0 OR AFL-3.0)",
   "author": "Magento Commerce",
   "main": "src/index.js",
