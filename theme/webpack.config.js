@@ -1,37 +1,38 @@
 const dotenv = require('dotenv');
-const proxy = require('http-proxy-middleware');
 const webpack = require('webpack');
+const { URL } = require('url');
 const { resolve } = require('path');
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
-const WorkboxPlugin = require('@magento/workbox-webpack-plugin');
-const WriteFileWebpackPlugin = require('write-file-webpack-plugin');
 const configureBabel = require('./babel.config.js');
-const getMagentoEnv = require('./devtools/get-magento-env');
-const express = require('express');
-const {
-    WebpackMagentoRootComponentsChunksPlugin
-} = require('@magento/anhinga');
+const { Webpack: WebpackTools } = require('@jzetlen/pwa-buildpack');
 
-let trustCert = () => {};
-if (process.platform === 'darwin') {
-    trustCert = require('./devtools/webpack-dev-server-tls-trust/osx')(
-        console,
-        process
-    );
-}
+const {
+    MagentoRootComponentsPlugin,
+    ServiceWorkerPlugin,
+    MagentoResolver,
+    PWADevServer
+} = WebpackTools;
 
 // assign .env contents to process.env
 dotenv.config();
 
+// assign env vars
+const serviceWorkerFileName = process.env.SERVICE_WORKER_FILE_NAME;
+const runtimeCacheAssetPath = new URL(process.env.MOCK_IMAGES_PATH).href;
+const backendDomain = new URL(process.env.MAGENTO_HOST).href;
+const publicPath = process.env.MAGENTO_PUBLIC_PATH;
+const enableServiceWorkerDebugging =
+    process.env.ENABLE_SERVICE_WORKER_DEBUGGING;
+
 // resolve directories
-const dirSource = resolve(__dirname, 'src');
-const dirOutput = resolve(__dirname, 'web/js');
+const paths = {
+    src: resolve(__dirname, 'src'),
+    assets: resolve(__dirname, 'web'),
+    output: resolve(__dirname, 'web/js')
+};
 
 // mark dependencies for vendor bundle
 const libs = ['react', 'react-dom', 'react-redux', 'react-router-dom', 'redux'];
-
-// static file directories to serve
-const staticFileDirs = ['images'];
 
 module.exports = async env => {
     const environment = [].concat(env);
@@ -39,38 +40,23 @@ module.exports = async env => {
     const isProd = environment.includes('production');
 
     console.log(`Environment: ${environment}`);
-    let magentoEnv;
-
-    try {
-        magentoEnv = await getMagentoEnv(process.env.MAGENTO_HOST);
-    } catch (e) {
-        console.error(
-            `Unable to get Magento environment from "MAGENTO_HOST" configuration. Found: ${
-                process.env.MAGENTO_HOST
-            }.`,
-            e
-        );
-        process.exit(1);
-    }
-
-    const devPublicPath = magentoEnv.devServerHost + magentoEnv.publicAssetPath;
 
     // create the default config for development-like environments
     const config = {
         context: __dirname,
         entry: {
-            client: resolve(dirSource, 'index.js')
+            client: resolve(paths.src, 'index.js')
         },
         output: {
-            path: dirOutput,
-            publicPath: devPublicPath,
+            path: paths.output,
+            publicPath,
             filename: '[name].js',
             chunkFilename: '[name].js'
         },
         module: {
             rules: [
                 {
-                    include: [dirSource],
+                    include: [paths.src],
                     test: /\.js$/,
                     use: [
                         {
@@ -105,54 +91,23 @@ module.exports = async env => {
                 }
             ]
         },
-        resolve: {
-            modules: [__dirname, 'node_modules'],
-            mainFiles: ['index'],
-            extensions: ['.js']
-        },
+        resolve: await MagentoResolver.configure({
+            paths: {
+                root: __dirname
+            }
+        }),
         plugins: [
-            new WebpackMagentoRootComponentsChunksPlugin(),
+            new MagentoRootComponentsPlugin(),
             new webpack.NoEmitOnErrorsPlugin(),
             new webpack.EnvironmentPlugin({
                 NODE_ENV: isProd ? 'production' : 'development',
-                SERVICE_WORKER_FILE_NAME: magentoEnv.serviceWorkerFileName
+                SERVICE_WORKER_FILE_NAME: 'sw.js'
             })
-        ],
-        devServer: {
-            contentBase: false,
-            https: true,
-            host: magentoEnv.devServerHostname,
-            port: magentoEnv.devServerPort,
-            publicPath: devPublicPath,
-            before(app) {
-                app.use(
-                    proxy(['**', `!${magentoEnv.publicAssetPath}**/*`], {
-                        secure: false,
-                        target: magentoEnv.storeOrigin,
-                        changeOrigin: true,
-                        logLevel: 'debug'
-                    })
-                );
-                staticFileDirs.forEach(dir => {
-                    app.use(
-                        resolve(magentoEnv.publicAssetPath, dir),
-                        express.static(resolve('web', dir))
-                    );
-                });
-                trustCert();
-            },
-            headers: {
-                'Access-Control-Allow-Origin': '*'
-            }
-        },
-        devtool: 'source-map'
+        ]
     };
 
     // modify the default config for production-like environments
     if (isProd) {
-        // disable sourcemaps
-        delete config.devtool;
-
         // add a second entry point for third-party runtime dependencies
         config.entry.vendor = libs;
 
@@ -160,36 +115,45 @@ module.exports = async env => {
         config.plugins.push(
             new webpack.optimize.CommonsChunkPlugin({
                 names: ['vendor']
+            }),
+            new ServiceWorkerPlugin({
+                env: {
+                    mode: 'production'
+                },
+                paths,
+                serviceWorkerFileName,
+                runtimeCacheAssetPath
             })
         );
 
         // add the UglifyJS plugin to minify the bundle and eliminate dead code
         config.plugins.push(new UglifyPlugin());
+    } else {
+        config.devServer = await PWADevServer.configure({
+            publicPath,
+            backendDomain,
+            serviceWorkerFileName,
+            paths,
+            id: 'magento-venia'
+        });
+
+        config.output.publicPath = config.devServer.publicPath;
+
+        config.plugins.push(
+            new ServiceWorkerPlugin({
+                env: {
+                    mode: 'development'
+                },
+                paths,
+                enableServiceWorkerDebugging,
+                serviceWorkerFileName,
+                runtimeCacheAssetPath
+            }),
+            new webpack.HotModuleReplacementPlugin()
+        );
+
+        config.devtool = 'source-map';
     }
-
-    // add the Workbox plugin to generate a service worker
-    config.plugins.push(
-        new WriteFileWebpackPlugin({
-            test: /sw\.js$/,
-            log: true
-        }),
-        new WorkboxPlugin.GenerateSW({
-            // `globDirectory` and `globPatterns` must match at least 1 file
-            // otherwise workbox throws an error
-            globDirectory: 'web',
-            globPatterns: ['**/*.{gif,jpg,png,svg}'],
-            modifyUrlPrefix: staticFileDirs.reduce((out, dir) => {
-                out[dir] = resolve(magentoEnv.publicAssetPath, dir);
-                return out;
-            }, {}),
-
-            // activate the worker as soon as it reaches the waiting phase
-            skipWaiting: true,
-
-            // the max scope of a worker is its location
-            swDest: magentoEnv.serviceWorkerFileName
-        })
-    );
 
     return config;
 };
