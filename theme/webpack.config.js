@@ -137,6 +137,21 @@ module.exports = async env => {
             id: 'magento-venia'
         });
 
+        if (process.env.MOCK_GRAPHQL) {
+            require('./devtools/devserver-graphql-simulator')(
+                config.devServer,
+                (root, gqlArgs, currentUrl) => {
+                    const fromEnv = process.env.MOCK_GRAPHQL;
+                    const fromQuery = currentUrl.searchParams.get('devPageType');
+                    if (fromQuery) {
+                        console.log(`Mocking GraphQL urlResolver to return PageType ${fromQuery}, from URL query parameter devPageType`);
+                    } else {
+                        console.log(`Mocking GraphQL urlResolver to return PageType ${fromEnv}, from environment variable MOCK_GRAPHQL`);
+                    }
+                    return fromQuery || fromEnv;
+                });
+        }
+
         config.output.publicPath = config.devServer.publicPath;
 
         config.plugins.push(
