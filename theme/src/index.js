@@ -2,6 +2,8 @@ import Peregrine from '@magento/peregrine';
 
 import './index.css';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const app = new Peregrine({
     apiBase: new URL('/graphql', location.origin).toString(),
     __tmp_webpack_public_path__: __webpack_public_path__
@@ -9,7 +11,7 @@ const app = new Peregrine({
 
 app.mount(document.getElementById('root'));
 
-if ('serviceWorker' in navigator) {
+if (isProd && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
             .register(process.env.SERVICE_WORKER_FILE_NAME)
