@@ -1,7 +1,10 @@
 .root {
+  composes: root from "../button.css";
   border: 1px solid rgb(var(--venia-text));
   border-radius: 50%;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
   height: 1rem;
+  position: relative;
   width: 1rem;
 }
 
@@ -9,8 +12,54 @@
   .root {
     border: 0;
     border-radius: 0;
+    box-shadow: none;
     height: auto;
     width: auto;
+  }
+}
+
+.root_selected {
+  composes: root;
+}
+
+@media(max-width: 1023px) {
+  .root_selected {
+    background-color: rgb(var(--venia-text));
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
+  }
+}
+
+.root_focused {
+  composes: root;
+}
+
+@media(max-width: 1023px) {
+  .root_focused {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.4);
+    outline: 0;
+  }
+
+  .root_focused::before {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    content: "";
+    display: block;
+    height: 2rem;
+    left: -9px;
+    position: absolute;
+    top: -9px;
+    width: 2rem;
+    z-index: -1;
+  }
+}
+
+.root_selected_focused {
+  composes: root_selected root_focused;
+}
+
+@media(max-width: 1023px) {
+  .root_selected_focused {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
   }
 }
 
@@ -20,11 +69,28 @@
 
 @media(min-width: 1024px) {
   .image {
-    background-color: rgb(var(--venia-grey));
     border-radius: 2px;
-    box-shadow: 0 0 0 1px white;
     display: block;
     height: auto;
+    opacity: 0.2;
     width: 100%;
   }
+}
+
+.image_selected {
+  composes: image;
+}
+
+@media(min-width: 1024px) {
+  .image_selected {
+    opacity: 1;
+  }
+}
+
+.image_focused {
+  composes: image;
+}
+
+.image_selected_focused {
+  composes: image_selected image_focused;
 }
