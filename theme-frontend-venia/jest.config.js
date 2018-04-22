@@ -1,15 +1,10 @@
 module.exports = {
     verbose: true,
+    browser: true,
     collectCoverage: true,
-    projects: [
-        {
-            displayName: 'theme',
-            testMatch: ['<rootDir>/src/**/__tests__/*.spec.js'],
-            browser: true,
-            moduleNameMapper: {
-                '\\.css$': 'identity-obj-proxy',
-                '^src/(.+)': '<rootDir>/src/$1'
-            }
-        }
-    ]
+    testMatch: ['<rootDir>/src/**/__tests__/*.spec.js'],
+    moduleNameMapper: {
+        '\\.css$': 'identity-obj-proxy',
+        '^src/(.+)': '<rootDir>/src/$1'
+    }
 };
