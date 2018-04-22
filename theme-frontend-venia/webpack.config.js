@@ -131,6 +131,5 @@ module.exports = async function(env) {
     } else {
         throw Error(`Unsupported environment phase in webpack config: `);
     }
-    console.log(config.resolve);
     return config;
 };
