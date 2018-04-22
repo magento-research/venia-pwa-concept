@@ -1,7 +1,7 @@
 {
-  "name": "venia-pwa-concept",
+  "name": "theme-frontend-venia",
   "version": "0.1.0",
-  "description": "Venia concept theme for Magento 2",
+  "description": "Venia PWA Concept Theme for Magento 2",
   "license": "(OSL-3.0 OR AFL-3.0)",
   "author": "Magento Commerce",
   "main": "src/index.js",
