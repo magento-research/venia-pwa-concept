@@ -10,7 +10,6 @@ const {
     }
 } = require('@jzetlen/pwa-buildpack');
 const path = require('path');
-const url = require('url');
 
 const UglifyPlugin = require('uglifyjs-webpack-plugin');
 const configureBabel = require('./babel.config.js');
