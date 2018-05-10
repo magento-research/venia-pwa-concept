@@ -23,6 +23,12 @@ const themePaths = {
 // mark dependencies for vendor bundle
 const libs = ['react', 'react-dom', 'react-redux', 'react-router-dom', 'redux'];
 
+const enableServiceWorkerDebugging = Boolean(
+    process.env.ENABLE_SERVICE_WORKER_DEBUGGING
+);
+
+const serviceWorkerFileName = process.env.SERVICE_WORKER_FILE_NAME;
+
 module.exports = async function(env) {
     const babelOptions = configureBabel(env.phase);
 
@@ -89,13 +95,21 @@ module.exports = async function(env) {
             new webpack.NoEmitOnErrorsPlugin(),
             new webpack.EnvironmentPlugin({
                 NODE_ENV: env.phase,
-                SERVICE_WORKER_FILE_NAME: 'sw.js'
+                // Blank the service worker file name to stop the app from
+                // attempting to register a service worker in index.js.
+                // Only register a service worker when in production or in the
+                // special case of debugging the service worker itself.
+                SERVICE_WORKER_FILE_NAME: JSON.stringify(
+                    (env.phase === 'production' ||
+                        enableServiceWorkerDebugging) &&
+                        serviceWorkerFileName
+                )
             }),
             new ServiceWorkerPlugin({
                 env,
-                paths: themePaths,
-                enableServiceWorkerDebugging: false,
-                serviceWorkerFileName: process.env.SERVICE_WORKER_FILE_NAME
+                enableServiceWorkerDebugging,
+                serviceWorkerFileName,
+                paths: themePaths
             })
         ]
     };
@@ -103,9 +117,9 @@ module.exports = async function(env) {
         config.devtool = 'eval-source-map';
 
         config.devServer = await PWADevServer.configure({
+            serviceWorkerFileName,
             publicPath: process.env.MAGENTO_BACKEND_PUBLIC_PATH,
             backendDomain: process.env.MAGENTO_BACKEND_DOMAIN,
-            serviceWorkerFileName: process.env.SERVICE_WORKER_FILE_NAME,
             paths: themePaths,
             id: 'magento-venia'
         });
