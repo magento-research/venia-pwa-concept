@@ -24,7 +24,6 @@ const themePaths = {
 const libs = ['react', 'react-dom', 'react-redux', 'react-router-dom', 'redux'];
 
 module.exports = async function(env) {
-
     const { phase } = env;
 
     const babelOptions = configureBabel(phase);
