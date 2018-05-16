@@ -8,8 +8,16 @@
 ## Description:
  
 <!-- (OPTIONAL) What needs to be done to replicate this issue? (provide Gist if needed) -->
-### Steps to reproduce
- 
+### Environment and steps to reproduce
+
+OS:
+
+Magento 2 version:
+
+Other environment information:
+
+Steps to reproduce:
+
 1. First Step
 2. Second Step
 3. Etc.
