@@ -60,10 +60,8 @@ We will un-assign you from this issue, but please feel free to contribute to ano
 
 #### Step 4: Work on the issue
 
-After you provide a target date, the issue is now "in progress", and
+After you provide an estimate, the issue is now "in progress", and
 you officially become a member of the [Magento Research] organization.
-
-Membership to the organization gives you access to our private discussions and repositories.
 
 If you need more time to work on the issue, please contact us as soon as possible.
 We may request an update on your progress, but we are willing to accomodate.
