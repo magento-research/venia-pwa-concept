@@ -73,7 +73,7 @@ module.exports = async function(env) {
                     ]
                 },
                 {
-                    test: /\.svg$/,
+                    test: /\.(jpg|svg)$/,
                     use: [
                         {
                             loader: 'file-loader',
