@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Footer from 'src/components/Footer';
 import Header from 'src/components/Header';
 import Main from 'src/components/Main';
+import MiniCart from 'src/components/MiniCart';
 import Navigation from 'src/components/Navigation';
 
 import classify from 'src/classify';
@@ -28,6 +29,7 @@ class Page extends Component {
                 <Main>{children}</Main>
                 <Footer />
                 <Navigation nav={nav} />
+                <MiniCart />
             </div>
         );
     }

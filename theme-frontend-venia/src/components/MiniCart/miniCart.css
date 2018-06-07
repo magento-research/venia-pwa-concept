@@ -1,0 +1,79 @@
+.root {
+  align-content: start;
+  background-color: white;
+  box-shadow: -1px 0 rgba(0, 0, 0, 0.12);
+  bottom: 0;
+  display: grid;
+  grid-auto-rows: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 320px;
+}
+
+.header {
+  align-content: center;
+  align-items: center;
+  background-color: rgb(var(--venia-grey));
+  box-shadow: 0 1px rgba(0, 0, 0, 0.12);
+  display: grid;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  grid-auto-rows: 3rem;
+  grid-template-columns: 1fr;
+  height: 3.5rem;
+  justify-content: end;
+  position: relative;
+}
+
+.title {
+  align-items: center;
+  display: inline-flex;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 0 auto 0 1rem;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.trigger {
+  align-items: center;
+  display: inline-flex;
+  height: 1.5rem;
+  justify-content: center;
+  margin: 0 0.75rem 0 0;
+  padding: 0;
+  width: 1.5rem;
+}
+
+.summary {
+  padding: 1rem;
+}
+
+.totals {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.subtotalValue {
+  font-weight: 600;
+  margin-left: 0.5rem;
+}
+
+.cta {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem 1rem;
+}
+
+.checkout {
+  composes: button from '../button.css';
+  align-content: center;
+  display: grid;
+  grid: auto / auto auto;
+  grid-gap: 0.5rem;
+  justify-content: center;
+}
