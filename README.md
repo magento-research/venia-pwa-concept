@@ -8,7 +8,7 @@ For the Venia PWA concept to work, you will need a working Magento 2.3 environme
 ## Setup Magento 2.3 with Vagrant
 1. Clone the [Magento 2 Vagrant setup](https://github.com/paliarush/magento2-vagrant-for-developers) locally.
 
-2. Copy `etc/config.yaml.dist` as `etc/config.yaml` and update it to use Magento v2.3-develop and PHP7.1  by changing:<br />
+2. Copy `etc/config.yaml.dist` as `etc/config.yaml` and update it to use Magento the `2.3-develop` branch and PHP version 7.1  by changing:<br />
 `ce: "git@github.com:magento/magento2.git"` to 
 `ce: "git@github.com:magento/magento2.git::2.3-develop"`.<br />
 And by changing `php_version: "7.0"` to `php_version: "7.1"`
@@ -26,7 +26,9 @@ And by changing `php_version: "7.0"` to `php_version: "7.1"`
 
 2. Symlink the module in this repository to `app/code/Magento/Pwa`. For instance, on your host running the `paliarush` Vagrant box, `cd` to `magento2-vagrant-for-developers/magento2ce/app/code/Magento`, and run `ln -s /Users/me/venia-pwa-concept/module Pwa`.
 
-3. For instance, on your host running the `paliarush` Vagrant box, `cd` to `magento2-vagrant-for-developers/magento2ce/app/design/frontend/Magento`, and run `ln -s /Users/me/venia-pwa-concept/theme-frontend-venia venia`
+3. On your host, `cd` to your Magento installation root `magento2-vagrant-for-developers/magento2ce/` and `bin/magento setup:upgrade` to install the necessary module files that were linked previously.
+
+4. Symlink the theme in this repository to `app/design/frontend/Magento/venia`. For instance, on your host running the `paliarush` Vagrant box, `cd` to `magento2-vagrant-for-developers/magento2ce/app/design/frontend/Magento`, and run `ln -s /Users/me/venia-pwa-concept/theme-frontend-venia venia`
 
 ## Configure the Venia theme
 1. Configure the theme properly: Copy `.env.dist` to `.env` and update as necessary, i.e. with the correct host URL (`MAGENTO_BACKEND_DOMAIN`).
