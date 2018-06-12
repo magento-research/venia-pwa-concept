@@ -2,7 +2,7 @@ import { Component, Fragment, createElement } from 'react';
 import PropTypes from 'prop-types';
 
 import classify from 'src/classify';
-// import defaultClasses from './minicart.css';
+import defaultClasses from './product.css';
 
 class Product extends Component {
     static propTypes = {
@@ -12,32 +12,35 @@ class Product extends Component {
     };
 
     get options() {
-        const { product } = this.props;
+        const { classes, item } = this.props;
 
-        return product.options.map(({ name, value }) => (
+        return item.options.map(({ name, value }) => (
             <Fragment key={name}>
-                <dt>{name}</dt>
-                <dd>{value}</dd>
+                <dt className={classes.optionName}>{name}</dt>
+                <dd className={classes.optionValue}>{value}</dd>
             </Fragment>
         ));
     }
 
     render() {
         const { options, props } = this;
-        const { classes, product } = props;
+        const { classes, item } = props;
 
         return (
-            <li>
-                <div />
-                <div className={classes.name}>
-                    {product.name}
+            <li className={classes.root}>
+                <div className={classes.image} />
+                <div className={classes.name}>{item.name}</div>
+                <dl className={classes.options}>{options}</dl>
+                <div className={classes.quantity}>
+                    <select className={classes.quantitySelect} value="1">
+                        <option value="1">{'1'}</option>
+                    </select>
+                    <span className={classes.quantityOperator}>{'×'}</span>
+                    <span className={classes.price}>{item.price}</span>
                 </div>
-                <dl>
-                    {options}
-                </dl>
             </li>
         );
     }
 }
 
-export default classify({})(Product);
+export default classify(defaultClasses)(Product);

@@ -20,11 +20,12 @@ class MiniCart extends Component {
     static defaultProps = {
         // TODO: remove when connected to graphql
         data: toMap(mockData, v => [v.id, v])
-    }
+    };
 
     render() {
         const { classes, data } = this.props;
         const iconDimensions = { height: 16, width: 16 };
+        const productListClasses = { root: classes.products };
 
         return (
             <aside className={classes.root}>
@@ -36,6 +37,12 @@ class MiniCart extends Component {
                         <Icon name="x" />
                     </button>
                 </div>
+                <List
+                    render="ul"
+                    renderItem={Product}
+                    items={data}
+                    classes={productListClasses}
+                />
                 <div className={classes.summary}>
                     <dl className={classes.totals}>
                         <dt className={classes.subtotalLabel}>
